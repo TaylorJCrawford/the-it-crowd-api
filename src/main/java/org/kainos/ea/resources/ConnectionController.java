@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 @Path("/api")
 public class ConnectionController {
 
-    private ConnectionService connectionService = new ConnectionService();
+    private final ConnectionService connectionService = new ConnectionService();
 
     @GET
     @Path("/database-active")
