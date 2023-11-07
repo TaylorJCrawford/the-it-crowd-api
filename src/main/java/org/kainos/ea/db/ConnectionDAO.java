@@ -19,7 +19,7 @@ public class ConnectionDAO {
             ResultSet rs = st.executeQuery(
                     "SHOW STATUS WHERE Variable_name='Uptime'");
 
-            while (rs.next()) {
+            if (rs.next()) {
                 return "Database Online For: " + System.getenv("DB_NAME") + "!";
             }
         } catch (SQLException e) {
