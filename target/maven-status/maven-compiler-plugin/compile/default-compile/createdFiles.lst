@@ -1,2 +1,7 @@
+org/kainos/ea/client/DatabaseConnectionFailedException.class
+org/kainos/ea/api/ConnectionService.class
+org/kainos/ea/db/DatabaseConnector.class
+org/kainos/ea/resources/ConnectionController.class
 org/kainos/ea/DropwizardTheITCrowdServiceConfiguration.class
+org/kainos/ea/db/ConnectionDAO.class
 org/kainos/ea/DropwizardTheITCrowdServiceApplication.class

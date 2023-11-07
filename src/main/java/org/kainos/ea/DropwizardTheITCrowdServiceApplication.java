@@ -3,6 +3,7 @@ package org.kainos.ea;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.kainos.ea.resources.ConnectionController;
 
 public class DropwizardTheITCrowdServiceApplication extends Application<DropwizardTheITCrowdServiceConfiguration> {
 
@@ -23,7 +24,7 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
     @Override
     public void run(final DropwizardTheITCrowdServiceConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        environment.jersey().register(new ConnectionController());
     }
 
 }

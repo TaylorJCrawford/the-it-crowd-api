@@ -1,2 +1,7 @@
 /Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/DropwizardTheITCrowdServiceConfiguration.java
+/Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/db/ConnectionDAO.java
+/Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/api/ConnectionService.java
+/Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/db/DatabaseConnector.java
+/Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/resources/ConnectionController.java
 /Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/DropwizardTheITCrowdServiceApplication.java
+/Users/taylorcrawford/Documents/Onboarding/Group Project/the-it-crowd-api/src/main/java/org/kainos/ea/client/DatabaseConnectionFailedException.java
