@@ -21,8 +21,8 @@ public class DatabaseConnector {
         name = System.getenv("DB_NAME");
 
         if (user == null || password == null || host == null)
-            throw new IllegalArgumentException("Properties file must exist " +
-                        "and must contain user, password, name and host properties.");
+            throw new IllegalArgumentException("Missing Environment Variables " +
+                        "must contain user, password, name and host variables.");
 
         conn = DriverManager.getConnection("jdbc:mysql://" + host + "/" + name + "?useSSL=false", user, password);
         return conn;
