@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
-@Api("API for Jobs app")
+@Api("API for Jobs Controller")
 @Path("/api")
 public class JobController {
 

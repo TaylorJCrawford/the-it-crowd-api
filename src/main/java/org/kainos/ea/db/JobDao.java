@@ -16,7 +16,7 @@ public class JobDao {
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery(
-                "SELECT * FROM JobRoles;");
+                "SELECT jobId, jobName FROM JobRoles;");
 
         List<Job> jobs = new ArrayList<>();
 
@@ -29,15 +29,9 @@ public class JobDao {
                     rs.getInt("jobId"),
                     rs.getString("jobName")
             );
-
-            System.out.println(job);
-
-            job.setJobId(rs.getInt("jobId"));
             jobs.add(job);
 
         }
-        System.out.println(jobs);
         return jobs;
     }
-
 }

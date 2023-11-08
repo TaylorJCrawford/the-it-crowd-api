@@ -6,18 +6,18 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.kainos.ea</groupId>
-    <artifactId>JavaWebService</artifactId>
+    <groupId>org.kainos.ea</groupId>
+    <artifactId>DropwizardTheITCrowd</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>WebService</name>
+    <name>DropwizardTheITCrowdService</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>2.0.23</dropwizard.version>
-        <mainClass>com.kainos.ea.WebServiceApplication</mainClass>
+        <mainClass>org.kainos.ea.DropwizardTheITCrowdServiceApplication</mainClass>
     </properties>
 
     <dependencyManagement>

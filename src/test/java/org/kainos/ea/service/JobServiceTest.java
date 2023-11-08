@@ -31,6 +31,12 @@ public class JobServiceTest {
         // Arrange
         List<Job> jobList = new ArrayList<>();
 
+        Job job1 = new Job(1, "Job1");
+        Job job2 = new Job(2, "Job2");
+
+        jobList.add(job1);
+        jobList.add(job2);
+
         Connection mockConnection = Mockito.mock(Connection.class);
 
         Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);

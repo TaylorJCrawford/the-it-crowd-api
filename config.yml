@@ -4,4 +4,4 @@ logging:
     org.kainos.ea: DEBUG
 
 swagger:
-  resourcePackage: com.kainos.uk
+  resourcePackage: com.kainos.ea

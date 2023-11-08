@@ -22,7 +22,6 @@ public class ConnectionController {
     public Response testDatabaseConnection() {
 
         try {
-            System.out.println("Database connected");
             return Response.status(200).entity(connectionService.testDatabaseConnection()).build();
         } catch (DatabaseConnectionFailedException e) {
             throw new RuntimeException(e);

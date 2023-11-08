@@ -29,3 +29,7 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+      - name: Run Unit tests
+        run: mvn clean test
+      - name: Run Integration tests
+        run: mvn clean integration-test

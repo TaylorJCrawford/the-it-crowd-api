@@ -1,5 +1,7 @@
 package org.kainos.ea.integration;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
@@ -15,30 +17,28 @@ import org.kainos.ea.cli.Job;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
 
+    private static final String host = System.getenv("BASE_URL");
+
     static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
             DropwizardTheITCrowdServiceApplication.class, null,
             new ResourceConfigurationSourceProvider()
     );
 
     @Test
-    void getJobRoles_shouldReturnListOfJobRoles() {
-
-        // Read the host URL from the "DB_HOST" environment variable
-        String host = System.getenv("DB_HOST");
-
-        // Ensure the "DB_HOST" environment variable is set
-        if (host == null) {
-            throw new IllegalArgumentException("Missing Environment Variable DB_HOST.");
-        }
+    void getJobRoles_shouldReturnListOfJobRoles() throws UnsupportedEncodingException {
 
         // Construct the target URL with the host URL
-        String targetUrl = "http://" + host + "/api/jobs";
+        String targetUrl = URLEncoder.encode(host + "/api/jobs", "UTF-8");
 
         List<Job> response = APP.client().target(targetUrl)
                 .request()
                 .get(List.class);
 
         Assertions.assertTrue(response.size() > 0);
+        // Assert that the response size is equal to the expected value
+        // You can change the expected value according to your test data
+        int expectedSize = 5;
+        Assertions.assertEquals(expectedSize, response.size());
     }
 
 
