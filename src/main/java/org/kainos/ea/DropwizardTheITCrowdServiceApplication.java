@@ -18,16 +18,15 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
     return "DropwizardTheITCrowdService";
   }
 
-    @Override
-    public void initialize(final Bootstrap<DropwizardTheITCrowdServiceConfiguration> bootstrap) {
-        bootstrap.addBundle(new SwaggerBundle<DropwizardTheITCrowdServiceConfiguration>() {
-
-            @Override
-            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(DropwizardTheITCrowdServiceConfiguration configuration) {
-                return configuration.getSwagger();
-            }
-        });
-    }
+  @Override
+  public void initialize(final Bootstrap<DropwizardTheITCrowdServiceConfiguration> bootstrap) {
+    bootstrap.addBundle(new SwaggerBundle<DropwizardTheITCrowdServiceConfiguration>() {
+      @Override
+      protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(DropwizardTheITCrowdServiceConfiguration configuration) {
+          return configuration.getSwagger();
+      }
+    });
+  }
 
   @Override
   public void run(final DropwizardTheITCrowdServiceConfiguration configuration,
