@@ -4,7 +4,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.kainos.ea.resources.ConnectionController;
-import org.kainos.ea.resources.JobController;
+import org.kainos.ea.controller.JobController;
 
 public class DropwizardTheITCrowdServiceApplication extends Application<DropwizardTheITCrowdServiceConfiguration> {
 

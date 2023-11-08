@@ -14,6 +14,10 @@ public class JobService {
     private JobDao jobDao = new JobDao();
     private DatabaseConnector databaseConnector = new DatabaseConnector();
 
+    public JobService(JobDao jobDao, DatabaseConnector databaseConnector) {
+        this.jobDao = jobDao;
+        this.databaseConnector = databaseConnector;
+    }
 
     public List<Job> getAllJobs() throws SQLException, CantGetAnyRolesException {
       return jobDao.getAllJobs(databaseConnector.getConnection());
