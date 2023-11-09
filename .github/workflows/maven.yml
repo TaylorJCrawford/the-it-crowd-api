@@ -27,5 +27,5 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
+      - name: Build with Maven and run linting checks
         run: mvn -B package --file pom.xml
