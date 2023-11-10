@@ -27,9 +27,10 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
+      - name: Build with Maven and run linting checks
         run: mvn -B package --file pom.xml
       - name: Run Unit tests
         run: mvn clean test
       - name: Run Integration tests
         run: mvn clean integration-test
+    

@@ -36,5 +36,4 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
         environment.jersey().register(new ConnectionController());
         environment.jersey().register(new JobController());
     }
-
 }
