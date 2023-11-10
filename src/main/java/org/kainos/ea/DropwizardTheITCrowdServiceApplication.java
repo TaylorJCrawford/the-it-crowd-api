@@ -17,6 +17,7 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
   public String getName() {
     return "DropwizardTheITCrowdService";
   }
+
   @Override
   public void initialize(final Bootstrap<DropwizardTheITCrowdServiceConfiguration> bootstrap) {
     bootstrap.addBundle(new SwaggerBundle<DropwizardTheITCrowdServiceConfiguration>() {
