@@ -32,5 +32,7 @@ jobs:
       - name: Run Unit tests
         run: mvn clean test
       - name: Run Integration tests
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
         run: mvn clean integration-test
     

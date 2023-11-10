@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
 import org.kainos.ea.cli.Job;
+import sun.tools.jconsole.JConsole;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
@@ -27,8 +28,9 @@ public class JobIntegrationTest {
     @Test
     void getJobRoles_shouldReturnListOfJobRoles() throws UnsupportedEncodingException {
 
+        System.out.println("---------------------> YO ITS HERE -->"+host);
         // Construct the target URL with the host URL
-        String targetUrl = URLEncoder.encode(host + "/api/jobs", "UTF-8");
+        String targetUrl = (host + "/api/jobs");
 
         List<Job> response = APP.client().target(targetUrl)
                 .request()
