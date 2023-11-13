@@ -1,6 +1,7 @@
 package org.kainos.ea.db;
+
 import org.kainos.ea.cli.Job;
-import org.kainos.ea.client.CantGetAnyRolesException;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,24 +11,21 @@ import java.util.List;
 
 public class JobDao {
 
-  public List<Job> getAllJobs(Connection c) throws SQLException, CantGetAnyRolesException {
-    Statement st = c.createStatement();
+  public List<Job> getAllJobs(Connection c) throws SQLException {
 
-    ResultSet rs = st.executeQuery("SELECT jobId, jobName FROM JobRoles;");
-    List<Job> jobs = new ArrayList<>();
+    try (Statement st = c.createStatement()) {
 
-    if(rs ==null){
-      throw new CantGetAnyRolesException();
+      ResultSet rs = st.executeQuery("SELECT jobId, jobName FROM JobRoles;");
+      List<Job> jobs = new ArrayList<>();
+
+      while (rs.next()) {
+        Job job = new Job(
+                rs.getInt("jobId"),
+                rs.getString("jobName")
+        );
+        jobs.add(job);
+      }
+      return jobs;
     }
-
-    while (rs.next()) {
-      Job job = new Job(
-              rs.getInt("jobId"),
-              rs.getString("jobName")
-      );
-      jobs.add(job);
-
-    }
-    return jobs;
   }
 }

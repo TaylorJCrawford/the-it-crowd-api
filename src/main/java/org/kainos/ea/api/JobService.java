@@ -4,14 +4,13 @@ import org.kainos.ea.cli.Job;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
-
 import java.sql.SQLException;
 import java.util.List;
 
 public class JobService {
 
-  private JobDao jobDao = new JobDao();
-  private DatabaseConnector databaseConnector = new DatabaseConnector();
+  private final JobDao jobDao;
+  private final DatabaseConnector databaseConnector;
 
   public JobService(JobDao jobDao, DatabaseConnector databaseConnector) {
     this.jobDao = jobDao;
@@ -19,5 +18,10 @@ public class JobService {
   }
 
   public List<Job> getAllJobs() throws SQLException, CantGetAnyRolesException {
-    return jobDao.getAllJobs(databaseConnector.getConnection());
+    List<Job> jobs = jobDao.getAllJobs(databaseConnector.getConnection());
+
+    if(jobs.isEmpty()){
+      throw new CantGetAnyRolesException();
+    }
+    return jobs;
   }}

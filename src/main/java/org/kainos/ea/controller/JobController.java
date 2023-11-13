@@ -11,27 +11,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
-@Api("API for Jobs Controller")
+@Api("Jobs API")
 @Path("/api")
 public class JobController {
 
-  private JobService jobService;
+  private final JobService jobService;
 
   public JobController(){
     DatabaseConnector databaseConnector = new DatabaseConnector();
     jobService = new JobService(new JobDao(), databaseConnector);
   }
+
   @GET
   @Path("/jobs")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobs(){
     try{
       return Response.ok(jobService.getAllJobs()).build();
-    } catch(SQLException e){
-      System.out.println(e);
-      return Response.serverError().build();
-    } catch (CantGetAnyRolesException e) {
-      System.out.println(e);
+    } catch(SQLException | CantGetAnyRolesException e){
+      System.err.println(e);
       return Response.serverError().build();
     }
   }

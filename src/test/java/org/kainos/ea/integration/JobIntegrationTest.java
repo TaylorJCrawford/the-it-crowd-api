@@ -1,9 +1,6 @@
 package org.kainos.ea.integration;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
-
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
@@ -13,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
 import org.kainos.ea.cli.Job;
-import sun.tools.jconsole.JConsole;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
@@ -29,7 +25,7 @@ public class JobIntegrationTest {
     void getJobRoles_shouldReturnListOfJobRoles()  {
 
         // Construct the target URL with the host URL
-        String targetUrl = (host + "/api/jobs");
+        String targetUrl = host + "/api/jobs";
 
         List<Job> response = APP.client().target(targetUrl)
                 .request()

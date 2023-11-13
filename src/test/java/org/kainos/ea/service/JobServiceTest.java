@@ -9,10 +9,11 @@ import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,6 +24,8 @@ public class JobServiceTest {
 
     JobDao jobDao = Mockito.mock(JobDao.class);
     DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
+    Statement createStatement = Mockito.mock(Statement.class);
+
 
     JobService jobService = new JobService(jobDao, databaseConnector);
 
@@ -50,13 +53,24 @@ public class JobServiceTest {
     }
 
     @Test
-    void getAllJobs_shouldThrowExceptionWhenDatabaseConnectionFails() throws SQLException, CantGetAnyRolesException {
+    void getAllJobs_shouldThrowExceptionWhenDatabaseConnectionFails() throws SQLException {
         // Arrange
         Connection mockConnection = Mockito.mock(Connection.class);
-        CantGetAnyRolesException exception = new CantGetAnyRolesException();
 
         Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getAllJobs(mockConnection)).thenThrow(exception);
+        Mockito.when(jobDao.getAllJobs(mockConnection)).thenThrow(SQLException.class);
+
+        // Act & Assert
+        assertThrows(SQLException.class, () -> jobService.getAllJobs());
+    }
+
+    @Test
+    void getAllJobs_shouldThrowExceptionWhenResponseIsNull() throws SQLException {
+        // Arrange
+        Connection mockConnection = Mockito.mock(Connection.class);
+
+        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+        Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(Collections.emptyList());
 
         // Act & Assert
         assertThrows(CantGetAnyRolesException.class, () -> jobService.getAllJobs());
