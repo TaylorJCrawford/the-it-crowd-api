@@ -26,9 +26,8 @@ public class JobIntegrationTest {
     );
 
     @Test
-    void getJobRoles_shouldReturnListOfJobRoles() throws UnsupportedEncodingException {
+    void getJobRoles_shouldReturnListOfJobRoles()  {
 
-        System.out.println("---------------------> YO ITS HERE -->"+host);
         // Construct the target URL with the host URL
         String targetUrl = (host + "/api/jobs");
 
