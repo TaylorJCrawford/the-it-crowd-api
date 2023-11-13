@@ -117,7 +117,8 @@
           </execution>
         </executions>
         <configuration>
-          <failBuildOnCVSS>8</failBuildOnCVSS>
+          <failBuildOnCVSS>4</failBuildOnCVSS>
+          <suppressionFile>suppressions.xml</suppressionFile>
         </configuration>
       </plugin>
     </plugins>
@@ -130,6 +131,14 @@
       </properties>
     </profile>
   </profiles>
+  <dependencies>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
   <reporting>
     <plugins>
       <plugin>
