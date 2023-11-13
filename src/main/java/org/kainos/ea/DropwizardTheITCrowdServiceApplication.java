@@ -6,6 +6,7 @@ import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.kainos.ea.resources.ConnectionController;
+import org.kainos.ea.resources.JobSpecController;
 
 public class DropwizardTheITCrowdServiceApplication extends Application<DropwizardTheITCrowdServiceConfiguration> {
 
@@ -32,5 +33,6 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
   public void run(final DropwizardTheITCrowdServiceConfiguration configuration,
                   final Environment environment) {
     environment.jersey().register(new ConnectionController());
+    environment.jersey().register(new JobSpecController());
   }
 }
