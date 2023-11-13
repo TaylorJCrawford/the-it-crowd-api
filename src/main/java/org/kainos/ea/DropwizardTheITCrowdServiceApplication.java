@@ -1,4 +1,5 @@
 package org.kainos.ea;
+
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -23,7 +24,7 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
 
       @Override
       protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(DropwizardTheITCrowdServiceConfiguration configuration) {
-        return configuration.getSwagger();
+          return configuration.getSwagger();
       }
     });
   }
