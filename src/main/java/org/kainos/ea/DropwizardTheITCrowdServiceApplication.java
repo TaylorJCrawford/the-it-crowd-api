@@ -1,5 +1,4 @@
 package org.kainos.ea;
-
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -21,16 +20,16 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
   @Override
   public void initialize(final Bootstrap<DropwizardTheITCrowdServiceConfiguration> bootstrap) {
     bootstrap.addBundle(new SwaggerBundle<DropwizardTheITCrowdServiceConfiguration>() {
+
       @Override
       protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(DropwizardTheITCrowdServiceConfiguration configuration) {
-          return configuration.getSwagger();
+        return configuration.getSwagger();
       }
     });
   }
 
   @Override
-  public void run(final DropwizardTheITCrowdServiceConfiguration configuration,
-                  final Environment environment) {
+  public void run(final DropwizardTheITCrowdServiceConfiguration configuration, final Environment environment) {
     environment.jersey().register(new ConnectionController());
   }
 }

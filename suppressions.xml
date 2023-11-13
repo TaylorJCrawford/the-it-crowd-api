@@ -211,4 +211,32 @@
         <cve>CVE-2023-41900</cve>
         <cve>CVE-2021-34429</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: dropwizard-swagger-2.0.0-1.jar: swagger-ui-bundle.js
+   ]]></notes>
+        <packageUrl regex="true">^pkg:javascript/DOMPurify@.*$</packageUrl>
+        <cve>CVE-2020-26870</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: guava-30.1.1-jre.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
+        <vulnerabilityName>CVE-2020-8908</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: snakeyaml-1.26.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
+        <vulnerabilityName>CVE-2022-1471</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-38752</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-38751</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-38750</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-41854</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-25857</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-38749</vulnerabilityName>
+        <vulnerabilityName>CVE-2022-1471</vulnerabilityName>
+    </suppress>
 </suppressions>

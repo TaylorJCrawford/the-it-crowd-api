@@ -1,5 +1,6 @@
 package org.kainos.ea.resources;
 
+
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.ConnectionService;
 import org.kainos.ea.client.DatabaseConnectionFailedException;
