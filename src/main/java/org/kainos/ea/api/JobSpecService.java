@@ -4,6 +4,7 @@ import org.kainos.ea.cli.JobSpec;
 import org.kainos.ea.client.JobSpecsNotFoundException;
 import org.kainos.ea.db.JobSpecDao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class JobSpecService {
@@ -15,11 +16,17 @@ public class JobSpecService {
         if (jobSpecDao.getAllJobSpecs() == null) {
             throw new JobSpecsNotFoundException();
         }
-        return jobSpecDao.getAllJobSpecs();
-    }
-    public JobSpec getJobSpec(int id) throws JobSpecsNotFoundException {
+        List<JobSpec> jobSpecs = jobSpecDao.getAllJobSpecs();
+        for (JobSpec jobSpec : jobSpecs) {
+            System.out.println("job specs --> " + jobSpec.getJobSpecName());
+        }
 
-            JobSpec jobSpec = jobSpecDao.getJobSpec(id);
+        return jobSpecs;
+    }
+
+    public JobSpec getJobSpec(int id) throws JobSpecsNotFoundException, SQLException {
+
+        JobSpec jobSpec = jobSpecDao.getJobSpec(id);
         if (jobSpec == null) {
             throw new JobSpecsNotFoundException();
         }
