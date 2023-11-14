@@ -19,7 +19,7 @@
    file name: guava-30.1.1-jre.jar
    ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
-        <cve>CVE-2023-2976</cve>
+
     </suppress>
     <suppress>
         <notes><![CDATA[
