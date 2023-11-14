@@ -22,16 +22,27 @@ public class JobController {
     jobService = new JobService(new JobDao(), databaseConnector);
   }
 
+
   @GET
   @Path("/jobs")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobs(){
     try{
       return Response.ok(jobService.getAllJobs()).build();
-    } catch(SQLException | CantGetAnyRolesException e){
+    }
+    catch(SQLException e){
       System.err.println(e);
-      return Response.serverError().build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+              .entity("Database error: " + e.getMessage())
+              .build();
+    }
+    catch(CantGetAnyRolesException e){
+      System.err.println(e);
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+              .entity("Job roles retrieval error: " + e.getMessage())
+              .build();
     }
   }
+
 }
 
