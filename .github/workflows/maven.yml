@@ -28,4 +28,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven and run linting checks
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: mvn -B package --file pom.xml
