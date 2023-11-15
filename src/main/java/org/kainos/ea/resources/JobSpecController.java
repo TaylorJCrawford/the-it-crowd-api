@@ -3,6 +3,8 @@ package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.JobSpecService;
 import org.kainos.ea.client.JobSpecsNotFoundException;
+import org.kainos.ea.db.DatabaseConnector;
+import org.kainos.ea.db.JobSpecDao;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,14 +17,17 @@ import java.sql.SQLException;
 @Api("Job Specification Controller")
 @Path("/api")
 public class JobSpecController {
-    private JobSpecService jobSpecService = new JobSpecService();
+
+   private final JobSpecDao jobSpecDao = new JobSpecDao();
+  private DatabaseConnector databaseConnector = new DatabaseConnector();
+   private JobSpecService jobSpecService = new JobSpecService(jobSpecDao, databaseConnector);
     @GET
     @Path("/job-specs")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJobSpecs() {
         try {
             return Response.ok(jobSpecService.getAllJobSpecs()).build();
-        } catch (JobSpecsNotFoundException e) {
+        } catch (JobSpecsNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
             return Response.serverError().build();
         }

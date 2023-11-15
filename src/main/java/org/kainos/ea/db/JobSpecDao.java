@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobSpecDao {
-    private final DatabaseConnector databaseConnector = new DatabaseConnector();
-
-    public List<JobSpec> getAllJobSpecs() {
-        String sql = "SELECT jobSpecId, jobSpecName FROM JobSpecs;";
-        try (Connection c = databaseConnector.getConnection(); PreparedStatement st = c.prepareStatement(sql);) {
+    public List<JobSpec> getAllJobSpecs(Connection c) {
+        String sql = "SELECT jobSpecId, jobSpecName, jobSpecSharepointLink FROM JobSpecs;";
+        try (PreparedStatement st = c.prepareStatement(sql);) {
+//            try (Connection c = databaseConnector.getConnection(); PreparedStatement st = c.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery();
 
             List<JobSpec> jobSpecs = new ArrayList<>();
@@ -22,7 +21,8 @@ public class JobSpecDao {
             while (rs.next()) {
                 JobSpec jobSpec = new JobSpec(
                         rs.getInt("jobSpecId"),
-                        rs.getString("jobSpecName")
+                        rs.getString("jobSpecName"),
+                        rs.getString("jobSpecSharepointLink")
                 );
                 System.out.println("in side while loop: " + jobSpec.getJobSpecName());
                 jobSpecs.add(jobSpec);
@@ -39,15 +39,17 @@ public class JobSpecDao {
         }
     }
 
-    public JobSpec getJobSpec(int id) throws SQLException {
-        String sql = "SELECT jobSpecId, jobSpecName FROM JobSpecs WHERE jobSpecId = " + id;
-        try (Connection c = databaseConnector.getConnection(); PreparedStatement st = c.prepareStatement(sql);) {
+    public JobSpec getJobSpec(int id, Connection c) throws SQLException {
+        String sql = "SELECT jobSpecId, jobSpecName, jobSpecSharepointLink FROM JobSpecs WHERE jobSpecId = " + id;
+        try (PreparedStatement st = c.prepareStatement(sql);) {
+//            try (Connection c = databaseConnector.getConnection(); PreparedStatement st = c.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
                 return new JobSpec(
                         rs.getInt("jobSpecId"),
-                        rs.getString("jobSpecName")
+                        rs.getString("jobSpecName"),
+                        rs.getString("jobSpecSharepointLink")
                 );
             }
         } catch (SQLException e) {
