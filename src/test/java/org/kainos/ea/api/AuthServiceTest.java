@@ -1,0 +1,58 @@
+package org.kainos.ea.api;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.cli.LoginDetails;
+import org.kainos.ea.cli.LoginRequest;
+import org.kainos.ea.client.*;
+import org.kainos.ea.db.AuthDAO;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@ExtendWith(MockitoExtension.class)
+public class AuthServiceTest {
+
+  AuthService authService = new AuthService();
+  LoginRequest validLoginRequest = new LoginRequest("email", "password");
+  LoginRequest invalidLoginRequest = new LoginRequest("invalidEmail", "invalidPassword");
+  AuthDAO authDAO = Mockito.mock(AuthDAO.class);
+
+  @Test
+  void userLogin_shouldReturnValidToken_whenLoginWithValidCredentials () throws DatabaseConnectionFailedException,
+          SQLException, CouldNotGeneratePasswordHashException, InvalidLoginAttemptException, CouldNotFindUserAccountException, NoSuchAlgorithmException,
+          CouldNotStoreNewJWTException, JWTCouldNotBeCreatedException {
+    // [Goal] - Able to login with valid creds and token is returned.
+
+    validLoginRequest.setPasswordHash("$argon2id$v=19$m=1024,t=20,p=4$QlanY4WNEr0orKUsTgk$3Tuxa3k7sYRuC9ZIr1wvSESKYyLRQfnWAhQ5macZTFtbZOpt6sZ7JcDjQLsZx0J39EqHRzbgFbRX0Hmsmww1g67CQiLPeAMPID/SfRINED6xFlpY8XQDCzGN+AmtoFwz7Spl/xkgbySt/3H5SFfIIuBvYvN71SegjnIK/Dwm82Y");
+
+    Mockito.when(authDAO.getUserPasswordHash(validLoginRequest)).thenReturn(validLoginRequest);
+
+    LoginDetails loginDetails = new LoginDetails(
+            "email",
+            "firstName",
+            "lastName",
+            "accessRight"
+    );
+
+    Mockito.when(authDAO.getUserDetails(validLoginRequest.getEmail())).thenReturn(loginDetails);
+
+    String token = authService.userLogin(validLoginRequest, authDAO);
+    Assertions.assertNotNull(token);
+  }
+
+  @Test
+  void userLogin_shouldReturnInValidLogin_whenGetUserLoginDetailsThrowException () throws DatabaseConnectionFailedException, InvalidLoginAttemptException {
+    // [Goal] - Get error for invalid login.
+
+    Mockito.when(authDAO.getUserPasswordHash(invalidLoginRequest)).thenThrow(InvalidLoginAttemptException.class);
+
+    assertThrows(InvalidLoginAttemptException.class,
+            () -> authService.userLogin(invalidLoginRequest, authDAO));
+  }
+}

@@ -28,4 +28,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven and run linting checks
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          TEST_VALID_EMAIL_API: ${{ secrets.TEST_VALID_EMAIL_API }}
+          TEST_VALID_USER_PASSWORD_API: ${{ secrets.TEST_VALID_USER_PASSWORD_API }}
         run: mvn -B package --file pom.xml
