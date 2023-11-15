@@ -1,11 +1,18 @@
 package org.kainos.ea.cli;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class JobCapabilityRequest {
+
 
   private String jobCapabilityName;
 
-  public JobCapabilityRequest(String jobCapabilityName) {
-    this.jobCapabilityName = jobCapabilityName;
+
+  @JsonCreator
+  public JobCapabilityRequest(
+          @JsonProperty("jobCapabilityName") String jobCapabilityName){
+    this.setJobCapabilityName(jobCapabilityName);
   }
 
   public String getJobCapabilityName() {
@@ -15,6 +22,11 @@ public class JobCapabilityRequest {
   public void setJobCapabilityName(String jobCapabilityName) {
     this.jobCapabilityName = jobCapabilityName;
   }
-}
+
+
+
+
+  }
+
 
 

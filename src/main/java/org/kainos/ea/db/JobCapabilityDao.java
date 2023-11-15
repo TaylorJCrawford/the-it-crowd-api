@@ -34,7 +34,6 @@ public class JobCapabilityDao {
     try (Statement st = c.createStatement()) {
 
       ResultSet rs = st.executeQuery("SELECT jobCapabilityName FROM JobCapabilities WHERE jobCapabilityId =" + jobCapabilityId);
-      List<JobCapability> jobCapabilities = new ArrayList<>();
 
       while (rs.next()) {
         JobCapabilityRequest jobCapabilityRequest = new JobCapabilityRequest(

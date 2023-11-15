@@ -25,4 +25,5 @@ public class JobCapability {
   public void setJobCapabilityName(String jobCapabilityName) {
     this.jobCapabilityName = jobCapabilityName;
   }
+
 }
