@@ -27,7 +27,7 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
     try { // To Speed Up Processing We Generate RSA Keys On Startup.
       KeyGeneratorUtil.setInstance(new KeyGeneratorUtil());
     } catch (CouldNotGenerateKeyPairException e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
     }
 
     bootstrap.addBundle(new SwaggerBundle<DropwizardTheITCrowdServiceConfiguration>() {

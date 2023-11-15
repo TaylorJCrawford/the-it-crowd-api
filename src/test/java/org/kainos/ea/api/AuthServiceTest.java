@@ -5,13 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.cli.LoginDetails;
 import org.kainos.ea.cli.LoginRequest;
-import org.kainos.ea.client.*;
 import org.kainos.ea.db.AuthDAO;
+import org.kainos.ea.client.DatabaseConnectionFailedException;
+import org.kainos.ea.client.CouldNotGeneratePasswordHashException;
+import org.kainos.ea.client.InvalidLoginAttemptException;
+import org.kainos.ea.client.CouldNotFindUserAccountException;
+import org.kainos.ea.client.JWTCouldNotBeCreatedException;
+
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,9 +27,9 @@ public class AuthServiceTest {
 
   @Test
   void userLogin_shouldReturnValidToken_whenLoginWithValidCredentials () throws DatabaseConnectionFailedException,
-          SQLException, CouldNotGeneratePasswordHashException, InvalidLoginAttemptException, CouldNotFindUserAccountException, NoSuchAlgorithmException,
-          CouldNotStoreNewJWTException, JWTCouldNotBeCreatedException {
-    // [Goal] - Able to login with valid creds and token is returned.
+          CouldNotGeneratePasswordHashException, InvalidLoginAttemptException, CouldNotFindUserAccountException,
+          JWTCouldNotBeCreatedException {
+    // [Goal] - Able to log in with valid creds and token is returned.
 
     validLoginRequest.setPasswordHash("$argon2id$v=19$m=1024,t=20,p=4$QlanY4WNEr0orKUsTgk$3Tuxa3k7sYRuC9ZIr1wvSESKYyLRQfnWAhQ5macZTFtbZOpt6sZ7JcDjQLsZx0J39EqHRzbgFbRX0Hmsmww1g67CQiLPeAMPID/SfRINED6xFlpY8XQDCzGN+AmtoFwz7Spl/xkgbySt/3H5SFfIIuBvYvN71SegjnIK/Dwm82Y");
 

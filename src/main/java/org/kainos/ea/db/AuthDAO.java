@@ -28,7 +28,7 @@ public class AuthDAO {
 
       ResultSet rs = st.executeQuery();
 
-      while (rs.next()) {
+      if (rs.next()) {
         String passwordHash = rs.getString("passwordHash");
         loginRequest.setPasswordHash(passwordHash);
 
@@ -56,14 +56,12 @@ public class AuthDAO {
       ResultSet rs = st.executeQuery();
 
       while (rs.next()) {
-        LoginDetails loginDetails = new LoginDetails(
+        return new LoginDetails(
                 email,
                 rs.getString("firstName"),
                 rs.getString("lastName"),
                 rs.getString("accessRight")
         );
-
-        return loginDetails;
       }
 
       throw new CouldNotFindUserAccountException();
