@@ -32,4 +32,8 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           TEST_VALID_EMAIL_API: ${{ secrets.TEST_VALID_EMAIL_API }}
           TEST_VALID_USER_PASSWORD_API: ${{ secrets.TEST_VALID_USER_PASSWORD_API }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: mvn -B package --file pom.xml

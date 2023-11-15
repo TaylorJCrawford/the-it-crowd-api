@@ -31,6 +31,7 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
     }
 
     bootstrap.addBundle(new SwaggerBundle<DropwizardTheITCrowdServiceConfiguration>() {
+
       @Override
       protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(DropwizardTheITCrowdServiceConfiguration configuration) {
           return configuration.getSwagger();
