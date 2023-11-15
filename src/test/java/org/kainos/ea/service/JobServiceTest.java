@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobCapabilityRequest;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
@@ -24,8 +25,6 @@ public class JobServiceTest {
 
     JobDao jobDao = Mockito.mock(JobDao.class);
     DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
-    Statement createStatement = Mockito.mock(Statement.class);
-
 
     JobService jobService = new JobService(jobDao, databaseConnector);
 
@@ -34,8 +33,8 @@ public class JobServiceTest {
         // Arrange
         List<Job> jobList = new ArrayList<>();
 
-        Job job1 = new Job(1, "Job1");
-        Job job2 = new Job(2, "Job2");
+        Job job1 = new Job(1, "Job1", 1,1);
+        Job job2 = new Job(2, "Job2",1,1);
 
         jobList.add(job1);
         jobList.add(job2);
