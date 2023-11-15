@@ -19,8 +19,8 @@ public class AuthValidatorTest {
             "fakePassword"
     );
 
-    boolean result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
-    Assertions.assertTrue(result);
+    String result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
+    Assertions.assertNull(result);
   }
 
   @ParameterizedTest
@@ -32,8 +32,9 @@ public class AuthValidatorTest {
             "fakePassword"
     );
 
-    boolean result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
-    Assertions.assertFalse(result);
+    String result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
+    Assertions.assertEquals(
+            "Invalid Email Address, Email Must Be In The Following Format: supperEmail@domain.com", result);
   }
 
   @ParameterizedTest
@@ -46,8 +47,8 @@ public class AuthValidatorTest {
             password
     );
 
-    boolean result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
-    Assertions.assertTrue(result);
+    String result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
+    Assertions.assertNull(result);
   }
 
   @ParameterizedTest
@@ -60,7 +61,8 @@ public class AuthValidatorTest {
             password
     );
 
-    boolean result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
-    Assertions.assertFalse(result);
+    String result = authValidator.areLoginDetailInCorrectFormat(loginRequest);
+    Assertions.assertEquals("Invalid Password, Password Must Be Between 8 and 64 character",
+            result);
   }
 }

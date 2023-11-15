@@ -32,7 +32,6 @@ public class JwtGeneratorUtil {
                 .withClaim("firstName", loginDetails.getFirstname())
                 .withClaim("lastName", loginDetails.getLastname())
                 .withClaim("email", loginDetails.getEmail())
-                .withClaim("accessRight", loginDetails.getAccessRight())
                 .withClaim("expiry", new java.sql.Timestamp(expiry.getTime()))
                 .sign(algorithm);
 

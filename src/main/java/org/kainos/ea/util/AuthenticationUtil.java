@@ -37,8 +37,7 @@ public class AuthenticationUtil {
     LoginDetails loginDetails = new LoginDetails(
             jwt.getClaim("email").toString(),
             jwt.getClaim("firstName").toString(),
-            jwt.getClaim("lastName").toString(),
-            jwt.getClaim("accessRight").toString()
+            jwt.getClaim("lastName").toString()
     );
 
     return loginDetails;

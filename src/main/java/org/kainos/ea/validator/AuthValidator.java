@@ -11,16 +11,16 @@ public class AuthValidator {
     return m.matches();
   }
 
-  public boolean areLoginDetailInCorrectFormat(LoginRequest loginRequest) {
+  public String areLoginDetailInCorrectFormat(LoginRequest loginRequest) {
 
     if (loginRequest.getPassword().length() < 8 || loginRequest.getPassword().length() > 64) {
-      return false;
+      return "Invalid Password, Password Must Be Between 8 and 64 character";
     }
 
     if (!checkEmailPattern(loginRequest.getEmail())) {
-      return false;
+      return "Invalid Email Address, Email Must Be In The Following Format: supperEmail@domain.com";
     }
 
-    return true;
+    return null;
   }
 }

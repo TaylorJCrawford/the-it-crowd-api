@@ -34,8 +34,7 @@ public class AuthenticationUtilTest {
     LoginDetails loginDetails = new LoginDetails(
             "email-loginDetails",
             "firstname-loginDetails",
-            "lastname-loginDetails",
-            "View-loginDetails"
+            "lastname-loginDetails"
     );
 
     String token = JwtGeneratorUtil.generateJWT(loginDetails, Clock.systemDefaultZone());
@@ -56,8 +55,7 @@ public class AuthenticationUtilTest {
     LoginDetails loginDetails = new LoginDetails(
             "email-loginDetails",
             "firstname-loginDetails",
-            "lastname-loginDetails",
-            "View-loginDetails"
+            "lastname-loginDetails"
     );
 
     String tokenExpired = JwtGeneratorUtil.generateJWT(loginDetails, clock);

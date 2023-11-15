@@ -30,9 +30,12 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
+          BASE_URL: ${{ vars.BASE_URL }}
+          TEST_VALID_EMAIL_API: ${{ secrets.TEST_VALID_EMAIL_API }}
+          TEST_VALID_USER_PASSWORD_API: ${{ secrets.TEST_VALID_USER_PASSWORD_API }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: employee_demo
           IMAGE_TAG: the-it-crowd-api
         run: |
-          docker build --build-arg DB_PASSWORD=${DB_PASSWORD} --build-arg DB_USERNAME=${DB_USERNAME} --build-arg DB_HOST=${DB_HOST} --build-arg DB_NAME=${DB_NAME} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build --build-arg DB_PASSWORD=${DB_PASSWORD} --build-arg DB_USERNAME=${DB_USERNAME} --build-arg DB_HOST=${DB_HOST} --build-arg DB_NAME=${DB_NAME} --build-arg BASE_URL=${BASE_URL} --build-arg TEST_VALID_EMAIL_API=${TEST_VALID_EMAIL_API} --build-arg TEST_VALID_USER_PASSWORD_API=${TEST_VALID_USER_PASSWORD_API} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

@@ -46,8 +46,8 @@ public class AuthDAO {
   public LoginDetails getUserDetails (String email) throws
           DatabaseConnectionFailedException, CouldNotFindUserAccountException {
 
-    String selectStatement = "SELECT firstName, lastName, accessRight " +
-            "FROM `Users` WHERE email = ?";
+    String selectStatement = "SELECT firstName, lastName FROM `Users` " +
+            "WHERE email = ?";
     try (Connection c = databaseConnector.getConnection();
             PreparedStatement st = c.prepareStatement(selectStatement)) {
 
@@ -59,8 +59,7 @@ public class AuthDAO {
         return new LoginDetails(
                 email,
                 rs.getString("firstName"),
-                rs.getString("lastName"),
-                rs.getString("accessRight")
+                rs.getString("lastName")
         );
       }
 

@@ -22,9 +22,15 @@ import javax.ws.rs.core.Response;
 @Path("/api/auth")
 public class AuthController {
 
-  private final AuthService authService = new AuthService();
-  private final AuthDAO authDAO = new AuthDAO();
-  private final AuthValidator authValidator = new AuthValidator();
+  private final AuthService authService;
+  private final AuthDAO authDAO;
+  private final AuthValidator authValidator;
+
+  public AuthController(AuthService authService, AuthDAO authDAO, AuthValidator authValidator) {
+    this.authService = authService;
+    this.authDAO = authDAO;
+    this.authValidator = authValidator;
+  }
 
   @POST
   @Path("/login")
@@ -32,8 +38,9 @@ public class AuthController {
   public Response userLogin(LoginRequest loginRequest) {
 
     try {
-      if (!authValidator.areLoginDetailInCorrectFormat(loginRequest)) {
-        throw new LoginDetailsAreNotInCorrectFormatException();
+      String validatorResult = authValidator.areLoginDetailInCorrectFormat(loginRequest);
+      if (validatorResult != null) {
+        throw new LoginDetailsAreNotInCorrectFormatException(validatorResult);
       }
 
       String token = authService.userLogin(loginRequest, authDAO);

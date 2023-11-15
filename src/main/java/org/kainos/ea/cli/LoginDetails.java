@@ -5,13 +5,11 @@ public class LoginDetails {
   private String email;
   private String firstname;
   private String lastname;
-  private String accessRight;
 
-  public LoginDetails(String email, String firstname, String lastname, String accessRight) {
+  public LoginDetails(String email, String firstname, String lastname) {
     this.email = email;
     this.firstname = firstname;
     this.lastname = lastname;
-    this.accessRight = accessRight;
   }
 
   public String getEmail() {
@@ -38,11 +36,4 @@ public class LoginDetails {
     this.lastname = lastname;
   }
 
-  public String getAccessRight() {
-    return accessRight;
-  }
-
-  public void setAccessRight(String accessRight) {
-    this.accessRight = accessRight;
-  }
 }

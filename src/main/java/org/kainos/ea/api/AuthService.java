@@ -16,7 +16,6 @@ import org.kainos.ea.util.JwtGeneratorUtil;
 import java.time.Clock;
 
 public class AuthService {
-
   public String userLogin(LoginRequest loginRequest, AuthDAO authDAO) throws DatabaseConnectionFailedException,
           InvalidLoginAttemptException, CouldNotFindUserAccountException, JWTCouldNotBeCreatedException,
           CouldNotGeneratePasswordHashException {

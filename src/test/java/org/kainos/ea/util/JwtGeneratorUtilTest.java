@@ -22,8 +22,7 @@ public class JwtGeneratorUtilTest {
   LoginDetails loginDetails = new LoginDetails(
           "email-loginDetails",
           "firstname-loginDetails",
-          "lastname-loginDetails",
-          "View-loginDetails"
+          "lastname-loginDetails"
   );
 
   LoginDetails loginDetailsInvalid = null;
@@ -76,9 +75,6 @@ public class JwtGeneratorUtilTest {
 
         String email = jwtDecoded.getClaim("email").asString();
         Assertions.assertEquals(email, loginDetails.getEmail());
-
-        String accessRight = jwtDecoded.getClaim("accessRight").asString();
-        Assertions.assertEquals(accessRight, loginDetails.getAccessRight());
 
       } catch (JWTCouldNotBeCreatedException e) {
         Assertions.fail("JWT Could Not Be Created!");
