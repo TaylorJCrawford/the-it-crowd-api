@@ -2,21 +2,30 @@ package org.kainos.ea.api;
 
 import org.kainos.ea.cli.JobSpec;
 import org.kainos.ea.client.JobSpecsNotFoundException;
+import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobSpecDao;
 
 import java.sql.SQLException;
 import java.util.List;
 
+
+
 public class JobSpecService {
+    private JobSpecDao jobSpecDao = new JobSpecDao();
 
-    private final JobSpecDao jobSpecDao = new JobSpecDao();
+    public DatabaseConnector databaseConnector;
 
-    public List<JobSpec> getAllJobSpecs() throws JobSpecsNotFoundException {
+    public JobSpecService(JobSpecDao jobSpecDao, DatabaseConnector databaseConnector) {
+        this.databaseConnector = databaseConnector;
+        this.jobSpecDao = jobSpecDao;
+    }
 
-        if (jobSpecDao.getAllJobSpecs() == null) {
+    public List<JobSpec> getAllJobSpecs() throws JobSpecsNotFoundException, SQLException {
+
+        if (jobSpecDao.getAllJobSpecs(databaseConnector.getConnection()) == null) {
             throw new JobSpecsNotFoundException();
         }
-        List<JobSpec> jobSpecs = jobSpecDao.getAllJobSpecs();
+        List<JobSpec> jobSpecs = jobSpecDao.getAllJobSpecs(databaseConnector.getConnection());
         for (JobSpec jobSpec : jobSpecs) {
             System.out.println("job specs --> " + jobSpec.getJobSpecName());
         }
@@ -26,7 +35,7 @@ public class JobSpecService {
 
     public JobSpec getJobSpec(int id) throws JobSpecsNotFoundException, SQLException {
 
-        JobSpec jobSpec = jobSpecDao.getJobSpec(id);
+        JobSpec jobSpec = jobSpecDao.getJobSpec(id, databaseConnector.getConnection());
         if (jobSpec == null) {
             throw new JobSpecsNotFoundException();
         }
