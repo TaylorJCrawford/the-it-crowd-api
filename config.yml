@@ -2,5 +2,9 @@ logging:
   level: INFO
   loggers:
     org.kainos.ea: DEBUG
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 swagger:
   resourcePackage: com.kainos.ea

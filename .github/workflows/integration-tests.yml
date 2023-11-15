@@ -8,17 +8,14 @@
 
 name: Java CI with Maven
 
+#Run job at 10 pm
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  schedule:
+    - cron: "0 19 * * 1-5"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -27,12 +24,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven and run linting checks
-      env:
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-        run: mvn -B package --file pom.xml
-      - name: Run Unit tests
-        run: mvn clean test
+      - name: Run Integration tests
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+        run: mvn clean integration-test
