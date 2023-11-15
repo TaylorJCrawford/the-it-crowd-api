@@ -34,8 +34,8 @@ public class JobServiceTest {
         // Arrange
         List<Job> jobList = new ArrayList<>();
 
-        Job job1 = new Job(1, "Job1");
-        Job job2 = new Job(2, "Job2");
+        Job job1 = new Job(1, 1, "Software Engineer");
+        Job job2 = new Job(2, 2, "Test Engineer");
 
         jobList.add(job1);
         jobList.add(job2);
