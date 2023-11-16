@@ -2,6 +2,7 @@ package org.kainos.ea.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
 import org.kainos.ea.client.CantGetAnyRolesException;
@@ -74,5 +75,35 @@ public class JobServiceTest {
 
         // Act & Assert
         assertThrows(CantGetAnyRolesException.class, () -> jobService.getAllJobs());
+    }
+
+    @Test
+    void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
+        int id = 1;
+        JobRequest jobRequest = new JobRequest(id, 1, "Software Engineer", "Codes", "https://www.aye.co.uk/");
+
+        Connection mockConnection = Mockito.mock(Connection.class);
+
+        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(jobRequest);
+
+        // Act
+        JobRequest result = jobService.getJobById(id);
+
+        // Assert
+        assertEquals(jobRequest, result);
+    }
+
+    @Test
+    void getJobById_shouldThrowExceptionWhenNotFound() throws SQLException, CantGetAnyRolesException {
+        int id = 111;
+
+        Connection mockConnection = Mockito.mock(Connection.class);
+
+        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
     }
 }

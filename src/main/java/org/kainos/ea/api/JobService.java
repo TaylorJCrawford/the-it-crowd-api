@@ -27,7 +27,6 @@ public class JobService {
   }
   public JobRequest getJobById(int id) throws SQLException, CantGetAnyRolesException {
     JobRequest job = jobDao.getJobById(id, databaseConnector.getConnection());
-
     if(job == null){
       throw new CantGetAnyRolesException();
     }

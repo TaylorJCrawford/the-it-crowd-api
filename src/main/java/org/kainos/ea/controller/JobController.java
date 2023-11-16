@@ -60,9 +60,7 @@ public class JobController {
     }
     catch(CantGetAnyRolesException e){
       System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Job roles retrieval error: " + e.getMessage())
-              .build();
+      return Response.status(Response.Status.BAD_REQUEST).build();
     }
   }
 }
