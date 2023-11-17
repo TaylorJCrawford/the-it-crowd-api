@@ -33,9 +33,7 @@ public class JobController {
     }
     catch(SQLException e){
       System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Database error: " + e.getMessage())
-              .build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
     catch(CantGetAnyRolesException e){
       System.err.println(e);
@@ -54,9 +52,7 @@ public class JobController {
     }
     catch(SQLException e){
       System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Database error: " + e.getMessage())
-              .build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
     catch(CantGetAnyRolesException e){
       System.err.println(e);
