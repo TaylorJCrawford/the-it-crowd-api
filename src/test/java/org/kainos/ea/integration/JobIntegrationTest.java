@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobResponsibility;
+
+import javax.ws.rs.core.Response;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
@@ -34,9 +37,33 @@ public class JobIntegrationTest {
         Assertions.assertTrue(response.size() > 0);
         // Assert that the response size is equal to the expected value
         // You can change the expected value according to your test data
-        int expectedSize = 5;
+        int expectedSize = 7;
         Assertions.assertEquals(expectedSize, response.size());
     }
 
+  @Test
+  void getJobResponsibility_shouldJobResponsibility_whenValidJobIdIsPassedIn() {
 
+    int searchJobId = 1;
+    String targetUrl = host + "/api/job-responsibility/" + searchJobId;
+
+    JobResponsibility response = APP.client().target(targetUrl)
+            .request()
+            .get(JobResponsibility.class);
+
+    Assertions.assertNotNull(response.getResponsibilityTextBody());
+  }
+
+  @Test
+  void getJobResponsibility_shouldThrowNoJobResponsibilityStoredForJobRoleException_whenInValidJobIdIsPassedIn() {
+
+    int searchJobId = -1;
+    String targetUrl = host + "/api/job-responsibility/" + searchJobId;
+
+    Response response = APP.client().target(targetUrl)
+            .request()
+            .get();
+
+    Assertions.assertEquals(400,response.getStatus());
+  }
 }

@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobResponsibility;
 import org.kainos.ea.client.CantGetAnyRolesException;
+import org.kainos.ea.client.CouldNotGetJobResponsibilityException;
+import org.kainos.ea.client.NoJobResponsibilityStoredForJobRoleException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import org.mockito.Mockito;
@@ -75,4 +78,39 @@ public class JobServiceTest {
         // Act & Assert
         assertThrows(CantGetAnyRolesException.class, () -> jobService.getAllJobs());
     }
+
+    @Test
+  void getJobResponsibility_shouldReturnJobResponsibilityObject_whenValidJobIdIsPassedIn() throws SQLException,
+          CouldNotGetJobResponsibilityException, NoJobResponsibilityStoredForJobRoleException {
+    Connection mockConnection = Mockito.mock(Connection.class);
+
+    JobResponsibility jobResponsibility = new JobResponsibility(
+            1,
+            "Example Responsibility Text Body",
+            "Example Responsibility Text Points"
+    );
+
+    int searchJobId = 1;
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobResponsibility(mockConnection, searchJobId)).thenReturn(jobResponsibility);
+
+    JobResponsibility result = jobService.getJobResponsibility(searchJobId);
+
+    assertEquals(jobResponsibility, result);
+  }
+
+  @Test
+  void getJobResponsibility_shouldThrowNoJobResponsibilityStoredForJobRoleException_whenInvalidJobIdIsPassedIn() throws
+          CouldNotGetJobResponsibilityException, SQLException {
+
+    int searchJobId = -1;
+
+    Connection mockConnection = Mockito.mock(Connection.class);
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobResponsibility(mockConnection, searchJobId)).thenReturn(null);
+
+    assertThrows(NoJobResponsibilityStoredForJobRoleException.class, () -> jobService.getJobResponsibility(searchJobId));
+  }
 }
