@@ -2,8 +2,14 @@ package org.kainos.ea.db;
 
 import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobResponsibility;
+import org.kainos.ea.client.CouldNotGetJobResponsibilityException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,4 +50,29 @@ public class JobDao {
         }
     }
 
+  public JobResponsibility getJobResponsibility(Connection c, int jobId) throws CouldNotGetJobResponsibilityException {
+
+    // Return The Responsibility For The Job.
+
+    String selectStatement = "SELECT responsibilityId, responsibilityTextBody, " +
+            "responsibilityTextPoints FROM Responsibilities WHERE jobId = ?";
+    try (PreparedStatement st = c.prepareStatement(selectStatement)) {
+
+      st.setInt(1, jobId);
+      ResultSet rs = st.executeQuery();
+
+      if (rs.next()) {
+        return new JobResponsibility(
+                rs.getInt("responsibilityId"),
+                rs.getString("responsibilityTextBody"),
+                rs.getString("responsibilityTextPoints")
+        );
+      }
+
+      return null;
+
+    } catch (Exception e) {
+      throw new CouldNotGetJobResponsibilityException();
+    }
+  }
 }

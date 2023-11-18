@@ -5,7 +5,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobResponsibility;
 import org.kainos.ea.client.CantGetAnyRolesException;
+import org.kainos.ea.client.CouldNotGetJobResponsibilityException;
+import org.kainos.ea.client.NoJobResponsibilityStoredForJobRoleException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import org.mockito.Mockito;
@@ -25,9 +28,6 @@ public class JobServiceTest {
 
     JobDao jobDao = Mockito.mock(JobDao.class);
     DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
-    Statement createStatement = Mockito.mock(Statement.class);
-
-
     JobService jobService = new JobService(jobDao, databaseConnector);
 
     @Test
@@ -78,32 +78,67 @@ public class JobServiceTest {
     }
 
     @Test
-    void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
-        int id = 1;
-        JobRequest jobRequest = new JobRequest(id, 1, "Software Engineer", "Codes", "https://www.aye.co.uk/");
-
+    void getJobResponsibility_shouldReturnJobResponsibilityObject_whenValidJobIdIsPassedIn() throws SQLException,
+            CouldNotGetJobResponsibilityException, NoJobResponsibilityStoredForJobRoleException {
         Connection mockConnection = Mockito.mock(Connection.class);
 
+        JobResponsibility jobResponsibility = new JobResponsibility(
+                1,
+                "Example Responsibility Text Body",
+                "Example Responsibility Text Points"
+        );
+
+        int searchJobId = 1;
+
         Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(jobRequest);
+        Mockito.when(jobDao.getJobResponsibility(mockConnection, searchJobId)).thenReturn(jobResponsibility);
 
-        // Act
-        JobRequest result = jobService.getJobById(id);
+        JobResponsibility result = jobService.getJobResponsibility(searchJobId);
 
-        // Assert
-        assertEquals(jobRequest, result);
+        assertEquals(jobResponsibility, result);
     }
 
     @Test
-    void getJobById_shouldThrowExceptionWhenNotFound() throws SQLException, CantGetAnyRolesException {
-        int id = 111;
+    void getJobResponsibility_shouldThrowNoJobResponsibilityStoredForJobRoleException_whenInvalidJobIdIsPassedIn() throws
+            CouldNotGetJobResponsibilityException, SQLException {
+
+        int searchJobId = -1;
 
         Connection mockConnection = Mockito.mock(Connection.class);
 
         Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(null);
+        Mockito.when(jobDao.getJobResponsibility(mockConnection, searchJobId)).thenReturn(null);
 
-        // Act & Assert
-        assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
+        assertThrows(NoJobResponsibilityStoredForJobRoleException.class, () -> jobService.getJobResponsibility(searchJobId));
     }
+
+  @Test
+  void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
+    int id = 1;
+    JobRequest jobRequest = new JobRequest(id, 1, "Software Engineer", "Codes", "https://www.aye.co.uk/");
+
+    Connection mockConnection = Mockito.mock(Connection.class);
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(jobRequest);
+
+    // Act
+    JobRequest result = jobService.getJobById(id);
+
+    // Assert
+    assertEquals(jobRequest, result);
+  }
+
+  @Test
+  void getJobById_shouldThrowExceptionWhenNotFound() throws SQLException {
+    int id = 111;
+
+    Connection mockConnection = Mockito.mock(Connection.class);
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(null);
+
+    // Act & Assert
+    assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
+  }
 }
