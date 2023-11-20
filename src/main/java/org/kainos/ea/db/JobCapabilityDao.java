@@ -3,10 +3,7 @@ package org.kainos.ea.db;
 import org.kainos.ea.cli.JobCapability;
 import org.kainos.ea.cli.JobCapabilityRequest;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +11,9 @@ public class JobCapabilityDao {
 
   public List<JobCapability> getAllJobCapabilities(Connection c) throws SQLException {
 
-    try (Statement st = c.createStatement()) {
+    try (PreparedStatement ps = c.prepareStatement("SELECT jobCapabilityId, jobCapabilityName FROM JobCapabilities");
+         ResultSet rs = ps.executeQuery()) {
 
-      ResultSet rs = st.executeQuery("SELECT jobCapabilityId, jobCapabilityName FROM JobCapabilities;");
       List<JobCapability> jobCapabilities = new ArrayList<>();
 
       while (rs.next()) {
@@ -28,18 +25,21 @@ public class JobCapabilityDao {
       }
       return jobCapabilities;
     }
+
   }
 
   public JobCapabilityRequest getJobCapability(int jobCapabilityId, Connection c) throws SQLException {
-    try (Statement st = c.createStatement()) {
+    try (PreparedStatement ps = c.prepareStatement("SELECT jobCapabilityName FROM JobCapabilities WHERE jobCapabilityId = ?");
+    ) {
+      ps.setInt(1, jobCapabilityId);
 
-      ResultSet rs = st.executeQuery("SELECT jobCapabilityName FROM JobCapabilities WHERE jobCapabilityId =" + jobCapabilityId);
-
-      while (rs.next()) {
-        JobCapabilityRequest jobCapabilityRequest = new JobCapabilityRequest(
-                rs.getString("jobCapabilityName")
-        );
-        return jobCapabilityRequest;
+      try (ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+          JobCapabilityRequest jobCapabilityRequest = new JobCapabilityRequest(
+                  rs.getString("jobCapabilityName")
+          );
+          return jobCapabilityRequest;
+        }
       }
     }
     return null;

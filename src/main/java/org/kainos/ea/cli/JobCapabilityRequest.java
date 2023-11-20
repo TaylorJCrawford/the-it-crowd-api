@@ -11,7 +11,7 @@ public class JobCapabilityRequest {
 
   @JsonCreator
   public JobCapabilityRequest(
-          @JsonProperty("jobCapabilityName") String jobCapabilityName){
+          @JsonProperty("jobCapabilityName") String jobCapabilityName) {
     this.setJobCapabilityName(jobCapabilityName);
   }
 
@@ -22,11 +22,7 @@ public class JobCapabilityRequest {
   public void setJobCapabilityName(String jobCapabilityName) {
     this.jobCapabilityName = jobCapabilityName;
   }
-
-
-
-
-  }
+}
 
 
 

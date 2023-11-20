@@ -34,7 +34,7 @@ public class JobIntegrationTest {
         Assertions.assertFalse(response.isEmpty());
         // Assert that the response size is equal to the expected value
         // You can change the expected value according to your test data
-        int expectedSize = 5;
+        int expectedSize = 7;
         Assertions.assertEquals(expectedSize, response.size());
     }
 

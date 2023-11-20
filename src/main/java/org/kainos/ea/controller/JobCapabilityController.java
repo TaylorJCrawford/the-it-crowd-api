@@ -32,20 +32,11 @@ public class JobCapabilityController {
   public Response getJobCapabilities() {
     try {
       return Response.ok(jobCapabilityService.getAllJobCapabilities()).build();
-    } catch (SQLException e) {
+    } catch (SQLException | CouldNotGetJobCapabilitiesException e) {
       System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Database error: " + e.getMessage())
-              .build();
-    } catch (CouldNotGetJobCapabilitiesException e) {
-      System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Job Capabilities retrieval error: " + e.getMessage())
-              .build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
   }
-
-
 
   @GET
   @Path("/job-capabilities/{jobCapabilityId}")
@@ -53,16 +44,9 @@ public class JobCapabilityController {
   public Response getJobCapabilityById(@PathParam("jobCapabilityId") int jobCapabilityId) {
     try {
       return Response.status(HttpStatus.OK_200).entity(jobCapabilityService.getJobCapability(jobCapabilityId)).build();
-    } catch (SQLException e) {
+    } catch (SQLException | JobCapabilityDoesNotExist e) {
       System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Database error: " + e.getMessage())
-              .build();
-    } catch (JobCapabilityDoesNotExist e) {
-      System.err.println(e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Job Capability Error: " + e.getMessage())
-              .build();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
   }
 }
