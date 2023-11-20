@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
-import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.cli.Job;
 
 import javax.ws.rs.core.Response;
@@ -46,13 +45,12 @@ public class JobIntegrationTest {
     int id = 1;
     String targetUrl = host + "/api/jobs/" + id;
 
-    JobRequest response = APP.client().target(targetUrl)
+    Job response = APP.client().target(targetUrl)
             .request()
-            .get(JobRequest.class);
+            .get(Job.class);
 
     // You can change the expected value according to your test data
-    int expectedId = 1;
-    Assertions.assertEquals(expectedId, response.getJobId());
+    Assertions.assertEquals(1, response.getJobId());
   }
 
   @Test

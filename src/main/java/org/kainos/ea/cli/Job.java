@@ -6,6 +6,12 @@ public class Job {
 
   private String jobSpecUrl;
 
+  public Job(int jobId, String jobName, String jobSpecUrl) {
+    this.jobId = jobId;
+    this.jobName = jobName;
+    this.jobSpecUrl = jobSpecUrl;
+  }
+
   public int getJobId() {
     return jobId;
   }
@@ -30,9 +36,4 @@ public class Job {
     this.jobSpecUrl = jobSpecUrl;
   }
 
-  public Job(int jobId, String jobName, String jobSpecUrl) {
-    this.jobId = jobId;
-    this.jobName = jobName;
-    this.jobSpecUrl = jobSpecUrl;
-  }
 }
