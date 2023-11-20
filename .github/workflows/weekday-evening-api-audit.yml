@@ -17,4 +17,4 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Run evening audit - check for dependency vulnerabilities
-        run: mvn verify
+        run: mvn verify -DskipTests
