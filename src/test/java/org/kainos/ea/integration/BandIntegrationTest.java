@@ -1,6 +1,5 @@
 package org.kainos.ea.integration;
 
-import java.util.List;
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
@@ -11,8 +10,10 @@ import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
 import org.kainos.ea.cli.Job;
 
+import java.util.List;
+
 @ExtendWith(DropwizardExtensionsSupport.class)
-public class JobIntegrationTest {
+public class BandIntegrationTest {
 
     private static final String host = System.getenv("BASE_URL");
 
@@ -22,10 +23,10 @@ public class JobIntegrationTest {
     );
 
     @Test
-    void getJobRoles_shouldReturnListOfJobRoles()  {
+    void getBands_shouldReturnListOfBands()  {
 
         // Construct the target URL with the host URL
-        String targetUrl = host + "/api/jobs";
+        String targetUrl = host + "/api/bands";
 
         List<Job> response = APP.client().target(targetUrl)
                 .request()
@@ -34,9 +35,8 @@ public class JobIntegrationTest {
         Assertions.assertTrue(response.size() > 0);
         // Assert that the response size is equal to the expected value
         // You can change the expected value according to your test data
-        int expectedSize = 7;
+        int expectedSize = 8;
         Assertions.assertEquals(expectedSize, response.size());
     }
-
 
 }

@@ -17,9 +17,8 @@ public class JobController {
 
   private final JobService jobService;
 
-  public JobController(){
-    DatabaseConnector databaseConnector = new DatabaseConnector();
-    jobService = new JobService(new JobDao(), databaseConnector);
+  public JobController(JobService jobService){
+    this.jobService = jobService;
   }
 
 
