@@ -12,7 +12,8 @@ import java.util.List;
 public class JobDao {
 
   public List<Job> getAllJobs(Connection c) throws SQLException {
-    try (PreparedStatement ps = c.prepareStatement("SELECT jobId, jobName, jobCapabilityId, jobSpecUrl FROM JobRoles;");
+    try (PreparedStatement ps = c.prepareStatement("SELECT jobId, jobName, jobCapabilityName, jobSpecUrl FROM JobRoles" +
+            " LEFT JOIN JobCapabilities USING(jobCapabilityId)");
          ResultSet rs = ps.executeQuery()) {
 
       List<Job> jobs = new ArrayList<>();
@@ -21,7 +22,7 @@ public class JobDao {
         Job job = new Job(
                 rs.getInt("jobId"),
                 rs.getString("jobName"),
-                rs.getInt("jobCapabilityId"),
+                rs.getString("jobCapabilityName"),
                 rs.getString("jobSpecUrl")
         );
         jobs.add(job);

@@ -3,26 +3,26 @@ package org.kainos.ea.cli;
 public class Job {
   private int jobId;
   private String jobName;
-  private int jobCapabilityId;
+  private String jobCapabilityName;
   private String jobSpecUrl;
 
 
 
-  public Job(int jobId, String jobName, int jobCapabilityId, String jobSpecUrl) {
+  public Job(int jobId, String jobName, String jobCapabilityName, String jobSpecUrl) {
     this.jobId = jobId;
     this.jobName = jobName;
-    this.jobCapabilityId = jobCapabilityId;
+    this.jobCapabilityName = jobCapabilityName;
     this.jobSpecUrl = jobSpecUrl;
   }
 
-  public int getJobCapabilityId() {
-    return jobCapabilityId;
+
+  public String getJobCapabilityName() {
+    return jobCapabilityName;
   }
 
-  public void setJobCapabilityId(int jobCapabilityId) {
-    this.jobCapabilityId = jobCapabilityId;
+  public void setJobCapabilityName(String jobCapabilityName) {
+    this.jobCapabilityName = jobCapabilityName;
   }
-
 
   public int getJobId() {
     return jobId;
