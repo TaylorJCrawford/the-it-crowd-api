@@ -33,7 +33,7 @@ public class JobCapabilityController {
     try {
       return Response.ok(jobCapabilityService.getAllJobCapabilities()).build();
     } catch (SQLException | CouldNotGetJobCapabilitiesException e) {
-      System.err.println(e);
+      System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
   }
@@ -45,7 +45,7 @@ public class JobCapabilityController {
     try {
       return Response.status(HttpStatus.OK_200).entity(jobCapabilityService.getJobCapability(jobCapabilityId)).build();
     } catch (SQLException | JobCapabilityDoesNotExist e) {
-      System.err.println(e);
+      System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
   }

@@ -30,7 +30,7 @@ public class JobController {
       return Response.ok(jobService.getAllJobs()).build();
     }
     catch(SQLException | CantGetAnyRolesException e){
-      System.err.println(e);
+      System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
   }
