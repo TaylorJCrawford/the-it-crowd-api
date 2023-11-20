@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
-import org.kainos.ea.cli.JobCapabilityRequest;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
@@ -12,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +31,8 @@ public class JobServiceTest {
         // Arrange
         List<Job> jobList = new ArrayList<>();
 
-        Job job1 = new Job(1, "Job1", 1,1);
-        Job job2 = new Job(2, "Job2",1,1);
+        Job job1 = new Job(1, "Job1", 1,"URL");
+        Job job2 = new Job(2, "Job2",1,"URL2");
 
         jobList.add(job1);
         jobList.add(job2);

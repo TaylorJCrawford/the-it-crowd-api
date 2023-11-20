@@ -9,7 +9,7 @@ import java.util.List;
 public class JobDao {
 
   public List<Job> getAllJobs(Connection c) throws SQLException {
-    try (PreparedStatement ps = c.prepareStatement("SELECT jobId, jobName, jobCapabilityId, jobSpecId FROM JobRoles;");
+    try (PreparedStatement ps = c.prepareStatement("SELECT jobId, jobName, jobCapabilityId, jobSpecUrl FROM JobRoles;");
          ResultSet rs = ps.executeQuery()) {
 
       List<Job> jobs = new ArrayList<>();
@@ -19,7 +19,7 @@ public class JobDao {
                 rs.getInt("jobId"),
                 rs.getString("jobName"),
                 rs.getInt("jobCapabilityId"),
-                rs.getInt("jobSpecId")
+                rs.getString("jobSpecUrl")
         );
         jobs.add(job);
       }

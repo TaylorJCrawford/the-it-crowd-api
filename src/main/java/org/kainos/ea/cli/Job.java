@@ -4,13 +4,15 @@ public class Job {
   private int jobId;
   private String jobName;
   private int jobCapabilityId;
-  private int jobSpecId;
+  private String jobSpecUrl;
 
-  public Job(int jobId, String jobName, int jobCapabilityId, int jobSpecId) {
+
+
+  public Job(int jobId, String jobName, int jobCapabilityId, String jobSpecUrl) {
     this.jobId = jobId;
     this.jobName = jobName;
     this.jobCapabilityId = jobCapabilityId;
-    this.jobSpecId = jobSpecId;
+    this.jobSpecUrl = jobSpecUrl;
   }
 
   public int getJobCapabilityId() {
@@ -21,13 +23,6 @@ public class Job {
     this.jobCapabilityId = jobCapabilityId;
   }
 
-  public int getJobSpecId() {
-    return jobSpecId;
-  }
-
-  public void setJobSpecId(int jobSpecId) {
-    this.jobSpecId = jobSpecId;
-  }
 
   public int getJobId() {
     return jobId;
@@ -44,4 +39,14 @@ public class Job {
   public void setJobName(String jobName) {
     this.jobName = jobName;
   }
+
+  public String getJobSpecUrl() {
+    return jobSpecUrl;
+  }
+
+  public void setJobSpecUrl(String jobSpecUrl) {
+    this.jobSpecUrl = jobSpecUrl;
+  }
 }
+
+
