@@ -2,11 +2,8 @@ package org.kainos.ea.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.api.JobSpecService;
-import org.kainos.ea.cli.JobSpec;
 import org.kainos.ea.client.JobSpecsNotFoundException;
 import org.kainos.ea.db.DatabaseConnector;
-import org.kainos.ea.db.JobSpecDao;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 

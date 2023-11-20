@@ -6,9 +6,9 @@ CREATE TABLE JobRoles (
 );
 
 INSERT INTO JobRoles (jobName) VALUES
-    ('Software Engineer'),
-    ('Data Analyst'),
-    ('Project Manager'),
-    ('Network Administrator'),
-    ('Graphic Designer');
+    ('Software Engineer', 'https://kainossoftwareltd.sharepoint.com/people/SitePages/Career-Lattice.aspx'),
+    ('Data Analyst', 'https://kainossoftwareltd.sharepoint.com/people/SitePages/Career-Lattice.aspx'),
+    ('Project Manager', 'https://kainossoftwareltd.sharepoint.com/people/SitePages/Career-Lattice.aspx'),
+    ('Network Administrator', 'https://kainossoftwareltd.sharepoint.com/people/SitePages/Career-Lattice.aspx'),
+    ('Graphic Designer', 'https://kainossoftwareltd.sharepoint.com/people/SitePages/Career-Lattice.aspx');
     

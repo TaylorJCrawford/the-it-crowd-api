@@ -2,8 +2,9 @@ package org.kainos.ea.cli;
 
 public class Job {
   private int jobId;
-  private int jobSpecId;
   private String jobName;
+
+  private String jobSpecUrl;
 
   public int getJobId() {
     return jobId;
@@ -11,14 +12,6 @@ public class Job {
 
   public void setJobId(int jobId) {
     this.jobId = jobId;
-  }
-
-  public int getJobSpecId() {
-    return jobSpecId;
-  }
-
-  public void setJobSpecId(int jobSpecId) {
-    this.jobSpecId = jobSpecId;
   }
 
   public String getJobName() {
@@ -29,11 +22,17 @@ public class Job {
     this.jobName = jobName;
   }
 
-  public Job(int jobId, int jobSpecId, String jobName) {
+  public String getJobSpecUrl() {
+    return jobSpecUrl;
+  }
+
+  public void setJobSpecUrl(String jobSpecUrl) {
+    this.jobSpecUrl = jobSpecUrl;
+  }
+
+  public Job(int jobId, String jobName, String jobSpecUrl) {
     this.jobId = jobId;
-    this.jobSpecId = jobSpecId;
     this.jobName = jobName;
-
-
+    this.jobSpecUrl = jobSpecUrl;
   }
 }

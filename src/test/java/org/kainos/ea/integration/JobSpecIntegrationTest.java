@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
-import org.kainos.ea.cli.JobSpec;
-import org.kainos.ea.db.JobSpecDao;
 
 import javax.ws.rs.core.Response;
 import java.util.List;

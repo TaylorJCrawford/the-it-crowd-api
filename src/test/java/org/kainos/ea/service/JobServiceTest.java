@@ -35,8 +35,8 @@ public class JobServiceTest {
         // Arrange
         List<Job> jobList = new ArrayList<>();
 
-        Job job1 = new Job(1, 1, "Software Engineer");
-        Job job2 = new Job(2, 2, "Test Engineer");
+        Job job1 = new Job(1, "Software Engineer", "https://www.something.com");
+        Job job2 = new Job(1, "Test Engineer", "https://www.something.com");
 
         jobList.add(job1);
         jobList.add(job2);
@@ -80,18 +80,18 @@ public class JobServiceTest {
     @Test
     void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
         int id = 1;
-        JobRequest jobRequest = new JobRequest(id, 1, "Software Engineer", "Codes", "https://www.aye.co.uk/");
+        Job job = new Job(id, "Software Engineer",  "https://www.aye.co.uk/");
 
         Connection mockConnection = Mockito.mock(Connection.class);
 
         Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(jobRequest);
+        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(job);
 
         // Act
-        JobRequest result = jobService.getJobById(id);
+        Job result = jobService.getJobById(id);
 
         // Assert
-        assertEquals(jobRequest, result);
+        assertEquals(job, result);
     }
 
     @Test

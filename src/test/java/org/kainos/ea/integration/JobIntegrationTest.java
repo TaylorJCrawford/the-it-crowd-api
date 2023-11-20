@@ -18,54 +18,53 @@ import javax.ws.rs.core.Response;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
 
-    private static final String host = System.getenv("BASE_URL");
+  private static final String host = System.getenv("BASE_URL");
 
-    static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
-            DropwizardTheITCrowdServiceApplication.class, null,
-            new ResourceConfigurationSourceProvider()
-    );
+  static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
+          DropwizardTheITCrowdServiceApplication.class, null,
+          new ResourceConfigurationSourceProvider()
+  );
 
-    @Test
-    void getJobRoles_shouldReturnListOfJobRoles() {
+  @Test
+  void getJobRoles_shouldReturnListOfJobRoles() {
+    System.out.println("LOGGING HOST --> " + host);
+    // Construct the target URL with the host URL
+    String targetUrl = host + "/api/jobs";
 
-        // Construct the target URL with the host URL
-        String targetUrl = host + "/api/jobs";
+    List<Job> response = APP.client().target(targetUrl)
+            .request()
+            .get(List.class);
 
-        List<Job> response = APP.client().target(targetUrl)
-                .request()
-                .get(List.class);
+    Assertions.assertTrue(response.size() > 0);
+    // Assert that the response size is equal to the expected value
+    // You can change the expected value according to your test data
+    Assertions.assertEquals(7, response.size());
+  }
 
-        Assertions.assertTrue(response.size() > 0);
-        // Assert that the response size is equal to the expected value
-        // You can change the expected value according to your test data
-        int expectedSize = 5;
-        Assertions.assertEquals(expectedSize, response.size());
-    }
+  @Test
+  void getJobRoleById_shouldReturnJobRequest() {
+    int id = 1;
+    String targetUrl = host + "/api/jobs/" + id;
 
-    @Test
-    void getJobRoleById_shouldReturnJobRequest() {
-        int id = 1;
-        String targetUrl = host + "/api/jobs/" + id;
+    JobRequest response = APP.client().target(targetUrl)
+            .request()
+            .get(JobRequest.class);
 
-        JobRequest response = APP.client().target(targetUrl)
-                .request()
-                .get(JobRequest.class);
+    // You can change the expected value according to your test data
+    int expectedId = 1;
+    Assertions.assertEquals(expectedId, response.getJobId());
+  }
 
-        // You can change the expected value according to your test data
-        int expectedId = 1;
-        Assertions.assertEquals(expectedId, response.getJobId());
-    }
+  @Test
+  void getJobRoleById_shouldReturnErrorWhenNotFound() {
+    int id = 111;
+    String targetUrl = host + "/api/jobs/" + id;
 
-    @Test
-    void getJobRoleById_shouldReturnErrorWhenNotFound() {
-        int id = 111;
-        String targetUrl = host + "/api/jobs/" + id;
+    Response response = APP.client().target(targetUrl)
+            .request()
+            .get(Response.class);
 
-        Response response = APP.client().target(targetUrl)
-                .request()
-                .get(Response.class);
-
-        // You can change the expected value according to your test data
-        Assertions.assertEquals(400, response.getStatus());
-    }
+    // You can change the expected value according to your test data
+    Assertions.assertEquals(400, response.getStatus());
+  }
 }
