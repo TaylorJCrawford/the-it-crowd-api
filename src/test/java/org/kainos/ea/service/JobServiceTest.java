@@ -33,8 +33,8 @@ public class JobServiceTest {
         // Arrange
         List<Job> jobList = new ArrayList<>();
 
-        Job job1 = new Job(1, "Job1", "Associate");
-        Job job2 = new Job(2, "Job2", "Associate");
+        Job job1 = new Job(1, "Software Engineer", "https://www.something.com", "Associate");
+        Job job2 = new Job(2, "Test Engineer", "https://www.something.com", "Associate");
 
         jobList.add(job1);
         jobList.add(job2);
@@ -73,5 +73,35 @@ public class JobServiceTest {
 
         // Act & Assert
         assertThrows(CantGetAnyRolesException.class, () -> jobService.getAllJobs());
+    }
+
+    @Test
+    void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
+        int id = 1;
+        Job job = new Job(id, "Software Engineer",  "https://www.sample.co.uk/", "Associate");
+
+        Connection mockConnection = Mockito.mock(Connection.class);
+
+        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(job);
+
+        // Act
+        Job result = jobService.getJobById(id);
+
+        // Assert
+        assertEquals(job, result);
+    }
+
+    @Test
+    void getJobById_shouldThrowExceptionWhenNotFound() throws SQLException, CantGetAnyRolesException {
+        int id = 111;
+
+        Connection mockConnection = Mockito.mock(Connection.class);
+
+        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+        Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
     }
 }
