@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class Job {
+public class JobRoleResponse {
   private int jobId;
   private String jobName;
   private String jobSpecUrl;
@@ -13,7 +13,7 @@ public class Job {
   private List<String> responsibilities;
 
   @JsonCreator
-  public Job(
+  public JobRoleResponse(
           @JsonProperty("jobId") int jobId,
           @JsonProperty("jobName") String jobName,
           @JsonProperty("jobSpecUrl") String jobSpecUrl,

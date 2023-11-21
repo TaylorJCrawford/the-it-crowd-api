@@ -3,7 +3,7 @@ package org.kainos.ea.service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.api.JobService;
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobRoleResponse;
 import org.kainos.ea.cli.JobsResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
@@ -12,8 +12,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,7 +79,10 @@ public class JobServiceTest {
     @Test
     void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
         int id = 1;
-        Job job = new Job(id, "Software Engineer",  "https://www.sample.co.uk/", "Associate");
+
+        String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
+        List<String> responsibilitiesList = Arrays.asList(responsibilities);
+        JobRoleResponse job = new JobRoleResponse(id, "Software Engineer",  "https://www.sample.co.uk/", "Associate", responsibilitiesList);
 
         Connection mockConnection = Mockito.mock(Connection.class);
 
@@ -87,7 +90,7 @@ public class JobServiceTest {
         Mockito.when(jobDao.getJobById(id,mockConnection)).thenReturn(job);
 
         // Act
-        Job result = jobService.getJobById(id);
+        JobRoleResponse result = jobService.getJobById(id);
 
         // Assert
         assertEquals(job, result);

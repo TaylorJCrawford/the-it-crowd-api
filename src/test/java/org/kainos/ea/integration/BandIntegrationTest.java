@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobRoleResponse;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class BandIntegrationTest {
         // Construct the target URL with the host URL
         String targetUrl = host + "/api/bands";
 
-        List<Job> response = APP.client().target(targetUrl)
+        List<JobRoleResponse> response = APP.client().target(targetUrl)
                 .request()
                 .get(List.class);
 

@@ -1,6 +1,6 @@
 package org.kainos.ea.api;
 
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobRoleResponse;
 import org.kainos.ea.cli.JobsResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
@@ -26,8 +26,8 @@ public class JobService {
     }
     return jobs;
   }
-  public Job getJobById(int id) throws SQLException, CantGetAnyRolesException {
-    Job job = jobDao.getJobById(id, databaseConnector.getConnection());
+  public JobRoleResponse getJobById(int id) throws SQLException, CantGetAnyRolesException {
+    JobRoleResponse job = jobDao.getJobById(id, databaseConnector.getConnection());
     if(job == null){
       throw new CantGetAnyRolesException();
     }

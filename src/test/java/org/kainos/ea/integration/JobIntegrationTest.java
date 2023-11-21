@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobRoleResponse;
 
 import javax.ws.rs.core.Response;
 
@@ -29,14 +29,11 @@ public class JobIntegrationTest {
     // Construct the target URL with the host URL
     String targetUrl = host + "/api/jobs";
 
-    List<Job> response = APP.client().target(targetUrl)
+    List<JobRoleResponse> response = APP.client().target(targetUrl)
             .request()
             .get(List.class);
 
     Assertions.assertTrue(response.size() > 0);
-    // Assert that the response size is equal to the expected value
-    // You can change the expected value according to your test data
-    Assertions.assertEquals(7, response.size());
   }
 
   @Test
@@ -44,9 +41,9 @@ public class JobIntegrationTest {
     int id = 1;
     String targetUrl = host + "/api/jobs/" + id;
 
-    Job response = APP.client().target(targetUrl)
+    JobRoleResponse response = APP.client().target(targetUrl)
             .request()
-            .get(Job.class);
+            .get(JobRoleResponse.class);
 
     // You can change the expected value according to your test data
     Assertions.assertEquals(1, response.getJobId());

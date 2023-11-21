@@ -1,6 +1,6 @@
 package org.kainos.ea.db;
 
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobRoleResponse;
 import org.kainos.ea.cli.JobsResponse;
 
 import java.sql.Connection;
@@ -35,7 +35,7 @@ public class JobDao {
     }
   }
 
-  public Job getJobById(int id, Connection c) throws SQLException {
+  public JobRoleResponse getJobById(int id, Connection c) throws SQLException {
     String jobSql = "SELECT jobId, jobName, jobSpecUrl, bandName " +
             "FROM JobRoles " +
             "LEFT JOIN Bands USING(bandId) " +
@@ -60,7 +60,7 @@ public class JobDao {
           responsibilities.add(responsibilityRs.getString("responsibilityDetails"));
         }
 
-        return new Job(
+        return new JobRoleResponse(
                 jobRs.getInt("jobId"),
                 jobRs.getString("jobName"),
                 jobRs.getString("jobSpecUrl"),
