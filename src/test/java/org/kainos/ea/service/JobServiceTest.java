@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobsResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
@@ -31,10 +32,10 @@ public class JobServiceTest {
     @Test
     void getAllJobs_shouldReturnListOfJobs() throws SQLException, CantGetAnyRolesException {
         // Arrange
-        List<Job> jobList = new ArrayList<>();
+        List<JobsResponse> jobList = new ArrayList<>();
 
-        Job job1 = new Job(1, "Software Engineer", "https://www.something.com", "Associate");
-        Job job2 = new Job(2, "Test Engineer", "https://www.something.com", "Associate");
+        JobsResponse job1 = new JobsResponse(1, "Software Engineer");
+        JobsResponse job2 = new JobsResponse(2, "Test Engineer");
 
         jobList.add(job1);
         jobList.add(job2);
@@ -45,7 +46,7 @@ public class JobServiceTest {
         Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(jobList);
 
         // Act
-        List<Job> result = jobService.getAllJobs();
+        List<JobsResponse> result = jobService.getAllJobs();
 
         // Assert
         assertEquals(jobList, result);

@@ -1,6 +1,7 @@
 package org.kainos.ea.db;
 
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobsResponse;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,23 +13,21 @@ import java.util.List;
 
 public class JobDao {
 
-  public List<Job> getAllJobs(Connection c) throws SQLException {
+  public List<JobsResponse> getAllJobs(Connection c) throws SQLException {
 
     try (Statement st = c.createStatement()) {
 
-      String queryString = "SELECT jobId, jobName, jobSpecUrl, bandName " +
+      String queryString = "SELECT jobId, jobName " +
               "FROM JobRoles " +
               "LEFT JOIN Bands USING(bandId);";
 
       ResultSet rs = st.executeQuery(queryString);
-      List<Job> jobs = new ArrayList<>();
+      List<JobsResponse> jobs = new ArrayList<>();
 
       while (rs.next()) {
-        Job job = new Job(
+        JobsResponse job = new JobsResponse(
                 rs.getInt("jobId"),
-                rs.getString("jobName"),
-                rs.getString("jobSpecUrl"),
-                rs.getString("bandName")
+                rs.getString("jobName")
         );
         jobs.add(job);
       }
@@ -37,16 +36,36 @@ public class JobDao {
   }
 
   public Job getJobById(int id, Connection c) throws SQLException {
-    String sql = "SELECT jobId, jobName, jobSpecUrl FROM JobRoles WHERE jobId = ?;";
-    try (PreparedStatement st = c.prepareStatement(sql)) {
-      st.setInt(1, id);
-      ResultSet rs = st.executeQuery();
-      if (rs.next()) {
+    String jobSql = "SELECT jobId, jobName, jobSpecUrl, bandName " +
+            "FROM JobRoles " +
+            "LEFT JOIN Bands USING(bandId) " +
+            "WHERE jobId = ?;";
+
+    String responsibilitiesSql = "SELECT responsibilityDetails " +
+            "FROM Responsibilities " +
+            "WHERE jobId = ?";
+
+    try (PreparedStatement jobSt = c.prepareStatement(jobSql);
+         PreparedStatement responsibilitySt = c.prepareStatement(responsibilitiesSql)) {
+      jobSt.setInt(1, id);
+      responsibilitySt.setInt(1, id);
+
+      ResultSet jobRs = jobSt.executeQuery();
+      ResultSet responsibilityRs = responsibilitySt.executeQuery();
+
+      if (jobRs.next()) {
+
+        List<String> responsibilities = new ArrayList<>();
+        while (responsibilityRs.next()) {
+          responsibilities.add(responsibilityRs.getString("responsibilityDetails"));
+        }
+
         return new Job(
-                rs.getInt("jobId"),
-                rs.getString("jobName"),
-                rs.getString("jobSpecUrl"),
-                rs.getString("bandName")
+                jobRs.getInt("jobId"),
+                jobRs.getString("jobName"),
+                jobRs.getString("jobSpecUrl"),
+                jobRs.getString("bandName"),
+                responsibilities
         );
       }
       return null;

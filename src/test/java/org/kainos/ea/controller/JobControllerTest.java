@@ -2,8 +2,7 @@ package org.kainos.ea.controller;
 
 import org.junit.jupiter.api.Test;
 import org.kainos.ea.api.JobService;
-import org.kainos.ea.cli.Job;
-import org.kainos.ea.client.ActionFailedException;
+import org.kainos.ea.cli.JobsResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.mockito.Mockito;
 
@@ -22,11 +21,11 @@ public class JobControllerTest {
     void getJobs_shouldReturn200Response_whenJobServiceDoesNotThrowException() throws CantGetAnyRolesException, SQLException {
         int expectedStatusCode = 200;
 
-        Job job1 = new Job(1,"Testing Engineer", "Manager");
-        Job job2 = new Job(2,"Testing2 Engineer", "Manager");
-        Job job3 = new Job(3,"Testing3 Engineer", "Manager");
+        JobsResponse job1 = new JobsResponse(1,"Testing Engineer");
+        JobsResponse job2 = new JobsResponse(2,"Testing2 Engineer");
+        JobsResponse job3 = new JobsResponse(3,"Testing3 Engineer");
 
-        List<Job> jobs = new ArrayList<>();
+        List<JobsResponse> jobs = new ArrayList<>();
         jobs.add(job1);
         jobs.add(job2);
         jobs.add(job3);

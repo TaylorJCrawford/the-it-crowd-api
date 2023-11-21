@@ -8,7 +8,7 @@ public class JobTest {
 
     @Test
     void getterAndSetterJobRoleTest() {
-        Job job = new Job(1, "Software Engineer", "Associate");
+        Job job = new Job(1, "Software Engineer", "www.test.com","Associate");
 
         int jobRoleId = 2;
         String jobRoleTitle = "Senior Software Engineer";

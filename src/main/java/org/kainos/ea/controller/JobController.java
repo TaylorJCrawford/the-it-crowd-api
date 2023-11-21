@@ -3,8 +3,6 @@ package org.kainos.ea.controller;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.client.CantGetAnyRolesException;
-import org.kainos.ea.db.DatabaseConnector;
-import org.kainos.ea.db.JobDao;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
