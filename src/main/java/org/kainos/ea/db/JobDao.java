@@ -3,18 +3,23 @@ package org.kainos.ea.db;
 import org.kainos.ea.cli.Job;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JobDao {
 
   public List<Job> getAllJobs(Connection c) throws SQLException {
-    try (PreparedStatement ps = c.prepareStatement("SELECT jobId, jobName, jobCapabilityName, jobSpecUrl FROM JobRoles" +
-            " LEFT JOIN JobCapabilities USING(jobCapabilityId)");
-         ResultSet rs = ps.executeQuery()) {
+
+    try (Statement st = c.createStatement()) {
+
+      String queryString = "SELECT jobId, jobName, bandName, jobCapabilityName, jobSpecUrl " +
+                "FROM JobRoles LEFT JOIN Bands USING(bandId) " +
+                "LEFT JOIN JobCapabilities USING(jobCapabilityId);";
+
+      ResultSet rs = st.executeQuery(queryString);
 
       List<Job> jobs = new ArrayList<>();
 
@@ -23,7 +28,8 @@ public class JobDao {
                 rs.getInt("jobId"),
                 rs.getString("jobName"),
                 rs.getString("jobCapabilityName"),
-                rs.getString("jobSpecUrl")
+                rs.getString("jobSpecUrl"),
+                rs.getString("bandName")
         );
         jobs.add(job);
       }

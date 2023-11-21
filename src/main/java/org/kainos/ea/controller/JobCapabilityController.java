@@ -5,8 +5,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.kainos.ea.api.JobCapabilityService;
 import org.kainos.ea.client.CouldNotGetJobCapabilitiesException;
 import org.kainos.ea.client.JobCapabilityDoesNotExist;
-import org.kainos.ea.db.DatabaseConnector;
-import org.kainos.ea.db.JobCapabilityDao;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -21,9 +20,8 @@ public class JobCapabilityController {
 
   private final JobCapabilityService jobCapabilityService;
 
-  public JobCapabilityController() {
-    DatabaseConnector databaseConnector = new DatabaseConnector();
-    jobCapabilityService = new JobCapabilityService(new JobCapabilityDao(), databaseConnector);
+  public JobCapabilityController(JobCapabilityService jobCapabilityService) {
+    this.jobCapabilityService = jobCapabilityService;
   }
 
   @GET
