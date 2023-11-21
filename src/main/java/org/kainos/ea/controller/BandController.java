@@ -17,42 +17,42 @@ import java.sql.SQLException;
 @Api("Bands API")
 @Path("/api")
 public class BandController {
-    private final BandService bandService;
+  private final BandService bandService;
 
-    public BandController(BandService bandService) {
-        this.bandService = bandService;
-    }
+  public BandController(BandService bandService) {
+    this.bandService = bandService;
+  }
 
-    @GET
-    @Path("/bands")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getBands(){
-        try {
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(bandService.getBands())
-                    .build();
-        } catch (ActionFailedException | SQLException e) {
-            System.err.println(e.getMessage());
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
-        }
+  @GET
+  @Path("/bands")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getBands() {
+    try {
+      return Response
+              .status(Response.Status.OK)
+              .entity(bandService.getBands())
+              .build();
+    } catch (ActionFailedException | SQLException e) {
+      System.err.println(e.getMessage());
+      return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
     }
+  }
 
-    @GET
-    @Path("/bands/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getBandById(@PathParam("id") int id){
-        try {
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(bandService.getBandById(id))
-                    .build();
-        } catch (ActionFailedException | SQLException e) {
-            System.err.println(e.getMessage());
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
-        } catch (DoesNotExistException e) {
-            System.err.println(e.getMessage());
-            return Response.status(HttpStatus.NOT_FOUND_404).build();
-        }
+  @GET
+  @Path("/bands/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getBandById(@PathParam("id") int id) {
+    try {
+      return Response
+              .status(Response.Status.OK)
+              .entity(bandService.getBandById(id))
+              .build();
+    } catch (ActionFailedException | SQLException e) {
+      System.err.println(e.getMessage());
+      return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+    } catch (DoesNotExistException e) {
+      System.err.println(e.getMessage());
+      return Response.status(HttpStatus.NOT_FOUND_404).build();
     }
+  }
 }
