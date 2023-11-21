@@ -10,19 +10,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class BandService {
-    private final DatabaseConnector databaseConnector;
-    private final BandDao bandDao;
+  private final DatabaseConnector databaseConnector;
+  private final BandDao bandDao;
 
-    public BandService(BandDao bandDao, DatabaseConnector databaseConnector) {
-        this.databaseConnector = databaseConnector;
-        this.bandDao = bandDao;
-    }
+  public BandService(BandDao bandDao, DatabaseConnector databaseConnector) {
+    this.databaseConnector = databaseConnector;
+    this.bandDao = bandDao;
+  }
 
-    public List<Band> getBands() throws ActionFailedException, SQLException {
-        return bandDao.getBands(databaseConnector.getConnection());
-    }
+  public List<Band> getBands() throws ActionFailedException, SQLException {
+    return bandDao.getBands(databaseConnector.getConnection());
+  }
 
-    public Band getBandById(int id) throws ActionFailedException, DoesNotExistException, SQLException {
-        return bandDao.getBandById(databaseConnector.getConnection(), id);
-    }
+  public Band getBandById(int id) throws ActionFailedException, DoesNotExistException, SQLException {
+    return bandDao.getBandById(databaseConnector.getConnection(), id);
+  }
 }
