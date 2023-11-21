@@ -4,7 +4,11 @@ import org.kainos.ea.cli.Band;
 import org.kainos.ea.client.ActionFailedException;
 import org.kainos.ea.client.DoesNotExistException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +42,7 @@ public class BandDao {
     public Band getBandById(Connection c, int id) throws ActionFailedException, DoesNotExistException {
         String queryString = "SELECT bandId, bandName " +
                 "FROM Bands " +
-                "WHERE bandId = ?";
+                "WHERE bandId = ?;";
 
         try (PreparedStatement st = c.prepareStatement(queryString)) {
             st.setInt(1, id);

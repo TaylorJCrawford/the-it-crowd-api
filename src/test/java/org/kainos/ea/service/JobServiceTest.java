@@ -24,7 +24,6 @@ public class JobServiceTest {
 
     JobDao jobDao = Mockito.mock(JobDao.class);
     DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
-    Statement createStatement = Mockito.mock(Statement.class);
 
 
     JobService jobService = new JobService(jobDao, databaseConnector);

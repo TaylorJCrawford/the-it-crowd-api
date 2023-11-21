@@ -33,7 +33,7 @@ public class BandController {
                     .entity(bandService.getBands())
                     .build();
         } catch (ActionFailedException | SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
         }
     }
@@ -48,10 +48,10 @@ public class BandController {
                     .entity(bandService.getBandById(id))
                     .build();
         } catch (ActionFailedException | SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
         } catch (DoesNotExistException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return Response.status(HttpStatus.NOT_FOUND_404).build();
         }
     }
