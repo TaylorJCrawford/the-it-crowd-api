@@ -1,29 +1,39 @@
 package org.kainos.ea;
-
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-import org.kainos.ea.api.AuthService;
+import org.kainos.ea.api.BandService;
 import org.kainos.ea.api.JobService;
-import org.kainos.ea.client.CouldNotGenerateKeyPairException;
-import org.kainos.ea.db.AuthDAO;
+import org.kainos.ea.controller.BandController;
+import org.kainos.ea.db.BandDao;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
+import org.kainos.ea.api.AuthService;
+import org.kainos.ea.client.CouldNotGenerateKeyPairException;
+import org.kainos.ea.db.AuthDAO;
 import org.kainos.ea.resources.AuthController;
 import org.kainos.ea.util.KeyGeneratorUtil;
-import org.kainos.ea.resources.JobController;
 import org.kainos.ea.validator.AuthValidator;
 
 public class DropwizardTheITCrowdServiceApplication extends Application<DropwizardTheITCrowdServiceConfiguration> {
-
+  private final JobService jobService;
+  private final BandService bandService;
   private final DatabaseConnector databaseConnector = new DatabaseConnector();
   private final AuthDAO authDAO = new AuthDAO();
   private final JobDao jobDao = new JobDao();
   private final AuthService authService = new AuthService();
   private final JobService jobService = new JobService(jobDao, databaseConnector);
   private final AuthValidator authValidator = new AuthValidator();
+
+
+  public DropwizardTheITCrowdServiceApplication() {
+    DatabaseConnector databaseConnector = new DatabaseConnector();
+    this.jobService = new JobService(new JobDao(), databaseConnector);
+    this.bandService = new BandService(new BandDao(), databaseConnector);
+  }
+
 
   public static void main(final String[] args) throws Exception {
     new DropwizardTheITCrowdServiceApplication().run(args);
@@ -57,5 +67,6 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
                   final Environment environment) {
     environment.jersey().register(new AuthController(authService, authDAO, authValidator));
     environment.jersey().register(new JobController(jobService));
+    environment.jersey().register(new BandController(bandService));
   }
 }

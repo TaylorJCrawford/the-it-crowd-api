@@ -13,7 +13,9 @@ public class DatabaseConnector {
     String host;
     String name;
 
-    if (conn != null && !conn.isClosed()) { return conn; }
+    if (conn != null && !conn.isClosed()) {
+      return conn;
+    }
 
     user = System.getenv("DB_USERNAME");
     password = System.getenv("DB_PASSWORD");

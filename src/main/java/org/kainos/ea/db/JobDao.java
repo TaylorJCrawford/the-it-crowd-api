@@ -15,13 +15,18 @@ public class JobDao {
 
     try (Statement st = c.createStatement()) {
 
-      ResultSet rs = st.executeQuery("SELECT jobId, jobName FROM JobRoles;");
+      String queryString = "SELECT jobId, jobName, bandName " +
+              "FROM JobRoles " +
+              "LEFT JOIN Bands USING(bandId);";
+
+      ResultSet rs = st.executeQuery(queryString);
       List<Job> jobs = new ArrayList<>();
 
       while (rs.next()) {
         Job job = new Job(
                 rs.getInt("jobId"),
-                rs.getString("jobName")
+                rs.getString("jobName"),
+                rs.getString("bandName")
         );
         jobs.add(job);
       }
