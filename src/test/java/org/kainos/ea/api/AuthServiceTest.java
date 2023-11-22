@@ -5,13 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.cli.LoginDetails;
 import org.kainos.ea.cli.LoginRequest;
+import org.kainos.ea.client.*;
 import org.kainos.ea.db.AuthDao;
-import org.kainos.ea.client.DatabaseConnectionFailedException;
-import org.kainos.ea.client.CouldNotGeneratePasswordHashException;
-import org.kainos.ea.client.InvalidLoginAttemptException;
-import org.kainos.ea.client.CouldNotFindUserAccountException;
-import org.kainos.ea.client.JWTCouldNotBeCreatedException;
-import org.kainos.ea.client.CouldNotGenerateKeyPairException;
 
 import org.kainos.ea.util.KeyGeneratorUtil;
 import org.mockito.Mockito;
@@ -28,9 +23,8 @@ public class AuthServiceTest {
   AuthDao authDAO = Mockito.mock(AuthDao.class);
 
   @Test
-  void userLogin_shouldReturnValidToken_whenLoginWithValidCredentials () throws DatabaseConnectionFailedException,
-          CouldNotGeneratePasswordHashException, InvalidLoginAttemptException, CouldNotFindUserAccountException,
-          JWTCouldNotBeCreatedException, CouldNotGenerateKeyPairException {
+  void userLogin_shouldReturnValidToken_whenLoginWithValidCredentials () throws
+          JWTCouldNotBeCreatedException, CouldNotGenerateKeyPairException, ActionFailedException, AuthenticationException {
     // [Goal] - Able to log in with valid creds and token is returned.
 
     KeyGeneratorUtil.setInstance(new KeyGeneratorUtil());
@@ -51,12 +45,12 @@ public class AuthServiceTest {
   }
 
   @Test
-  void userLogin_shouldReturnInValidLogin_whenGetUserLoginDetailsThrowException () throws DatabaseConnectionFailedException, InvalidLoginAttemptException {
+  void userLogin_shouldReturnInValidLogin_whenGetUserLoginDetailsThrowException () throws ActionFailedException, AuthenticationException {
     // [Goal] - Get error for invalid login.
 
-    Mockito.when(authDAO.getUserPasswordHash(invalidLoginRequest)).thenThrow(InvalidLoginAttemptException.class);
+    Mockito.when(authDAO.getUserPasswordHash(invalidLoginRequest)).thenThrow(AuthenticationException.class);
 
-    assertThrows(InvalidLoginAttemptException.class,
+    assertThrows(AuthenticationException.class,
             () -> authService.userLogin(invalidLoginRequest, authDAO));
   }
 }
