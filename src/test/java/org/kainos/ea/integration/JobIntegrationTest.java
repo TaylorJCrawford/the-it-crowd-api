@@ -26,7 +26,6 @@ public class JobIntegrationTest {
 
   @Test
   void getJobRoles_shouldReturnListOfJobRoles() {
-    System.out.println("LOGGING HOST --> " + host);
     // Construct the target URL with the host URL
     String targetUrl = host + "/api/jobs";
 
