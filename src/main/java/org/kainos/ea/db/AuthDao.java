@@ -2,7 +2,8 @@ package org.kainos.ea.db;
 
 import org.kainos.ea.cli.LoginDetails;
 import org.kainos.ea.cli.LoginRequest;
-import org.kainos.ea.client.*;
+import org.kainos.ea.client.ActionFailedException;
+import org.kainos.ea.client.AuthenticationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

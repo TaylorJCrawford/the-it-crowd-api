@@ -4,7 +4,9 @@ import com.password4j.Password;
 import org.kainos.ea.cli.LoginDetails;
 import org.kainos.ea.cli.LoginRequest;
 
-import org.kainos.ea.client.*;
+import org.kainos.ea.client.ActionFailedException;
+import org.kainos.ea.client.AuthenticationException;
+import org.kainos.ea.client.JWTCouldNotBeCreatedException;
 
 import org.kainos.ea.db.AuthDao;
 import org.kainos.ea.util.JwtGeneratorUtil;

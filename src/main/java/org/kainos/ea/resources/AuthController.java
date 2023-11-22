@@ -3,7 +3,11 @@ package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.AuthService;
 import org.kainos.ea.cli.LoginRequest;
-import org.kainos.ea.client.*;
+
+import org.kainos.ea.client.LoginDetailsAreNotInCorrectFormatException;
+import org.kainos.ea.client.ActionFailedException;
+import org.kainos.ea.client.AuthenticationException;
+import org.kainos.ea.client.JWTCouldNotBeCreatedException;
 import org.kainos.ea.db.AuthDao;
 import org.kainos.ea.validator.AuthValidator;
 
