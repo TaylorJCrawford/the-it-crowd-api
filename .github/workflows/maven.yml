@@ -27,15 +27,25 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven and run linting checks
+
+      - name: Run unit and integration tests
         env:
-          BASE_URL: ${{ vars.BASE_URL }}
-          TEST_VALID_EMAIL_API: ${{ secrets.TEST_VALID_EMAIL_API }}
-          TEST_VALID_USER_PASSWORD_API: ${{ secrets.TEST_VALID_USER_PASSWORD_API }}
+          BASE_URL: ${{ secrets.BASE_URL }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
-        run: mvn -B package --file pom.xml
-      - name: Run Unit tests
-        run: mvn clean test
+          TEST_VALID_EMAIL_API: ${{ secrets.TEST_VALID_EMAIL_API }}
+          TEST_VALID_USER_PASSWORD_API: ${{ secrets.TEST_VALID_USER_PASSWORD_API }}
+        run: mvn -DDB_HOST=${DB_HOST} -DDB_NAME=${DB_NAME} -DDB_USERNAME=${DB_USERNAME} -DDB_PASSWORD=${DB_PASSWORD} -DBASE_URL=${BASE_URL} -DTEST_VALID_EMAIL_API=${TEST_VALID_EMAIL_API} -DTEST_VALID_USER_PASSWORD_API=${TEST_VALID_USER_PASSWORD_API} clean integration-test
+
+      - name: Run lint
+        run: mvn verify -DskipTests
+
+      - name: Build with Maven
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+        run: mvn -DDB_HOST=${DB_HOST} -DDB_NAME=${DB_NAME} -DDB_USERNAME=${DB_USERNAME} -DDB_PASSWORD=${DB_PASSWORD} -DBASE_URL=${BASE_URL} -DskipTests -B package --file pom.xml
