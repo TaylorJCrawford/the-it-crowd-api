@@ -3,8 +3,6 @@ package org.kainos.ea.controller;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.client.CantGetAnyRolesException;
-import org.kainos.ea.db.DatabaseConnector;
-import org.kainos.ea.db.JobDao;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,18 +18,16 @@ public class JobController {
 
   private final JobService jobService;
 
-  public JobController() {
-    DatabaseConnector databaseConnector = new DatabaseConnector();
-    jobService = new JobService(new JobDao(), databaseConnector);
+  public JobController(JobService jobService) {
+    this.jobService = jobService;
   }
-
 
   @GET
   @Path("/jobs")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobs() {
     try {
-      return Response.ok(jobService.getAllJobs()).build();
+      return Response.ok(this.jobService.getAllJobs()).build();
     } catch (SQLException | CantGetAnyRolesException e) {
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -43,7 +39,7 @@ public class JobController {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobById(@PathParam("id") int id) {
     try {
-      return Response.ok(jobService.getJobById(id)).build();
+      return Response.ok(this.jobService.getJobById(id)).build();
     } catch (SQLException e) {
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

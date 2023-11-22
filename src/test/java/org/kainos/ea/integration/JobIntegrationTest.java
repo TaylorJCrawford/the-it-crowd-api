@@ -42,13 +42,14 @@ public class JobIntegrationTest {
   @Test
   void getJobRoleById_shouldReturnJobRequest() {
     int id = 1;
+
     String targetUrl = host + "/api/jobs/" + id;
 
     Job response = APP.client().target(targetUrl)
             .request()
             .get(Job.class);
 
-    // You can change the expected value according to your test data
+    // Check id field on response is = 1.
     Assertions.assertEquals(1, response.getJobId());
   }
 
