@@ -2,9 +2,7 @@ package org.kainos.ea.db;
 
 import org.kainos.ea.cli.LoginDetails;
 import org.kainos.ea.cli.LoginRequest;
-import org.kainos.ea.client.DatabaseConnectionFailedException;
-import org.kainos.ea.client.InvalidLoginAttemptException;
-import org.kainos.ea.client.CouldNotFindUserAccountException;
+import org.kainos.ea.client.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +14,7 @@ public class AuthDao {
   private final DatabaseConnector databaseConnector = new DatabaseConnector();
 
   public LoginRequest getUserPasswordHash (LoginRequest loginRequest) throws
-          InvalidLoginAttemptException, DatabaseConnectionFailedException {
+          AuthenticationException, ActionFailedException {
 
     String selectStatement = "SELECT passwordHash " +
             "FROM `Users` WHERE email = ?";
@@ -35,16 +33,16 @@ public class AuthDao {
         return loginRequest;
       }
 
-      throw new InvalidLoginAttemptException();
+      throw new AuthenticationException("Login credentials could not be verified");
 
     } catch (SQLException e) {
       System.err.println(e.getMessage());
-      throw new DatabaseConnectionFailedException();
+      throw new ActionFailedException("Could not access database");
     }
   }
 
   public LoginDetails getUserDetails (String email) throws
-          DatabaseConnectionFailedException, CouldNotFindUserAccountException {
+          ActionFailedException, AuthenticationException {
 
     String selectStatement = "SELECT firstName, lastName FROM `Users` " +
             "WHERE email = ?";
@@ -63,11 +61,11 @@ public class AuthDao {
         );
       }
 
-      throw new CouldNotFindUserAccountException();
+      throw new AuthenticationException("Could not find user account");
 
     } catch (SQLException e) {
       System.err.println(e.getMessage());
-      throw new DatabaseConnectionFailedException();
+      throw new ActionFailedException("Could not access database");
     }
   }
 }
