@@ -1,6 +1,8 @@
 package org.kainos.ea.db;
 
+import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.client.FailedToDeleteException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,6 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobDao {
+
+  public int createJobRole(Connection c, JobRequest jobRequest) throws SQLException {
+    String query = "INSERT INTO JobRoles (jobName, jobCapabilityId, bandId, jobSpecUrl) " +
+            "VALUES (?, ?, ?, ?);";
+
+    PreparedStatement st = c.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+    st.setString(1, jobRequest.getJobName());
+    st.setInt(2, jobRequest.getJobCapabilityId());
+    st.setInt(3, jobRequest.getBandId());
+    st.setString(4, jobRequest.getJobSpecSharepointLink());
+
+    st.executeUpdate();
+
+    ResultSet rs = st.getGeneratedKeys();
+
+    if (rs.next()) {
+      return rs.getInt(1);
+    }
+
+    return 0;
+  }
 
   public List<Job> getAllJobs(Connection c) throws SQLException {
 
@@ -55,4 +79,15 @@ public class JobDao {
     }
   }
 
+  public void deleteJobRole(int id, Connection c) throws SQLException, FailedToDeleteException {
+    String sql = "DELETE FROM JobRoles WHERE jobId = ?;";
+    PreparedStatement st = c.prepareStatement(sql);
+    st.setInt(1, id);
+
+    int affectedRows = st.executeUpdate();
+
+    if (affectedRows == 0) {
+      throw new FailedToDeleteException("Unable to delete job role.");
+    }
+  }
 }

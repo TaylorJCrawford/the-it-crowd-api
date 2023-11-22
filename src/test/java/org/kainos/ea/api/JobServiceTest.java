@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.cli.Job;
 import org.kainos.ea.client.CantGetAnyRolesException;
+import org.kainos.ea.client.DoesNotExistException;
+import org.kainos.ea.client.FailedToDeleteException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import org.mockito.Mockito;
@@ -17,13 +19,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class JobServiceTest {
 
   JobDao jobDao = Mockito.mock(JobDao.class);
   DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
-
 
   JobService jobService = new JobService(jobDao, databaseConnector);
 
@@ -102,5 +105,17 @@ public class JobServiceTest {
 
     // Act & Assert
     assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
+  }
+
+  @Test
+  void deleteJobRole_shouldDeleteJobWhenCalled() throws SQLException, FailedToDeleteException, DoesNotExistException {
+    Connection mockConnection = Mockito.mock(Connection.class);
+    Job job = new Job(1, "Teacher", "Associate", "www.example.com");
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobById(1, mockConnection)).thenReturn(job);
+
+    jobService.deleteJobRole(1);
+    verify(jobDao, times(1)).deleteJobRole(1, mockConnection);
   }
 }
