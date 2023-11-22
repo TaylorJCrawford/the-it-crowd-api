@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
 
-  private static final String host = System.getenv("BASE_URL");
+  private static final String HOST = "http://localHOST:8080";
 
   static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
           DropwizardTheITCrowdServiceApplication.class, null,
@@ -26,8 +26,8 @@ public class JobIntegrationTest {
 
   @Test
   void getJobRoles_shouldReturnListOfJobRoles() {
-    // Construct the target URL with the host URL
-    String targetUrl = host + "/api/jobs";
+    // Construct the target URL with the HOST URL
+    String targetUrl = HOST + "/api/jobs";
 
     List<Job> response = APP.client().target(targetUrl)
             .request()
@@ -43,7 +43,7 @@ public class JobIntegrationTest {
   void getJobRoleById_shouldReturnJobRequest() {
     int id = 1;
 
-    String targetUrl = host + "/api/jobs/" + id;
+    String targetUrl = HOST + "/api/jobs/" + id;
 
     Job response = APP.client().target(targetUrl)
             .request()
@@ -56,7 +56,7 @@ public class JobIntegrationTest {
   @Test
   void getJobRoleById_shouldReturnErrorWhenNotFound() {
     int id = 111;
-    String targetUrl = host + "/api/jobs/" + id;
+    String targetUrl = HOST + "/api/jobs/" + id;
 
     Response response = APP.client().target(targetUrl)
             .request()

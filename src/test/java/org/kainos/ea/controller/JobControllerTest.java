@@ -3,8 +3,8 @@ package org.kainos.ea.controller;
 import org.junit.jupiter.api.Test;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
-import org.kainos.ea.client.ActionFailedException;
 import org.kainos.ea.client.CantGetAnyRolesException;
+import org.kainos.ea.resources.JobController;
 import org.mockito.Mockito;
 
 import javax.ws.rs.core.Response;
