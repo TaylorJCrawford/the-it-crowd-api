@@ -27,4 +27,6 @@ jobs:
       - name: Run Integration tests
         env:
           BASE_URL: ${{ vars.BASE_URL }}
+          TEST_VALID_EMAIL_API: ${{ secrets.TEST_VALID_EMAIL_API }}
+          TEST_VALID_USER_PASSWORD_API: ${{ secrets.TEST_VALID_USER_PASSWORD_API }}
         run: mvn clean integration-test
