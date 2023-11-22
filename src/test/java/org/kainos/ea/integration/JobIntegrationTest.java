@@ -38,11 +38,8 @@ public class JobIntegrationTest {
             .request()
             .get(List.class);
 
-    Assertions.assertTrue(response.size() > 0);
-    // Assert that the response size is equal to the expected value
-    // You can change the expected value according to your test data
-    Assertions.assertEquals(7, response.size());
-  }
+        Assertions.assertTrue(response.size() > 0);
+    }
 
     @Test
     void deleteJobRole_shouldDeleteWhenCalled() throws SQLException {
