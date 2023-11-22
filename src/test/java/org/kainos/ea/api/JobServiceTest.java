@@ -1,8 +1,7 @@
-package org.kainos.ea.service;
+package org.kainos.ea.api;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.Job;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
@@ -11,7 +10,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
