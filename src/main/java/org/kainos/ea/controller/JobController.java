@@ -32,14 +32,9 @@ public class JobController {
   public Response getJobs() {
     try {
       return Response.ok(jobService.getAllJobs()).build();
-    } catch (SQLException e) {
+    } catch (SQLException | CantGetAnyRolesException e) {
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-    } catch (CantGetAnyRolesException e) {
-      System.err.println(e.getMessage());
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Job roles retrieval error: " + e.getMessage())
-              .build();
     }
   }
 
