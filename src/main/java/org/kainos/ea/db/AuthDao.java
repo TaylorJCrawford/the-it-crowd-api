@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AuthDAO {
+public class AuthDao {
 
   private final DatabaseConnector databaseConnector = new DatabaseConnector();
 

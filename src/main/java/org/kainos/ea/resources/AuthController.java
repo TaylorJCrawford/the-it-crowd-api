@@ -3,7 +3,7 @@ package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.AuthService;
 import org.kainos.ea.cli.LoginRequest;
-import org.kainos.ea.db.AuthDAO;
+import org.kainos.ea.db.AuthDao;
 import org.kainos.ea.client.DatabaseConnectionFailedException;
 import org.kainos.ea.client.JWTCouldNotBeCreatedException;
 import org.kainos.ea.client.CouldNotGeneratePasswordHashException;
@@ -23,10 +23,10 @@ import javax.ws.rs.core.Response;
 public class AuthController {
 
   private final AuthService authService;
-  private final AuthDAO authDAO;
+  private final AuthDao authDAO;
   private final AuthValidator authValidator;
 
-  public AuthController(AuthService authService, AuthDAO authDAO, AuthValidator authValidator) {
+  public AuthController(AuthService authService, AuthDao authDAO, AuthValidator authValidator) {
     this.authService = authService;
     this.authDAO = authDAO;
     this.authValidator = authValidator;

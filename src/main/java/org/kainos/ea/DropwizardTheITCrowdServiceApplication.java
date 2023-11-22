@@ -12,7 +12,7 @@ import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import org.kainos.ea.api.AuthService;
 import org.kainos.ea.client.CouldNotGenerateKeyPairException;
-import org.kainos.ea.db.AuthDAO;
+import org.kainos.ea.db.AuthDao;
 import org.kainos.ea.resources.AuthController;
 import org.kainos.ea.resources.JobController;
 import org.kainos.ea.util.KeyGeneratorUtil;
@@ -21,7 +21,7 @@ import org.kainos.ea.validator.AuthValidator;
 public class DropwizardTheITCrowdServiceApplication extends Application<DropwizardTheITCrowdServiceConfiguration> {
   private final JobService jobService;
   private final BandService bandService;
-  private final AuthDAO authDAO = new AuthDAO();
+  private final AuthDao authDAO = new AuthDao();
   private final AuthService authService = new AuthService();
   private final AuthValidator authValidator = new AuthValidator();
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.cli.LoginDetails;
 import org.kainos.ea.cli.LoginRequest;
-import org.kainos.ea.db.AuthDAO;
+import org.kainos.ea.db.AuthDao;
 import org.kainos.ea.client.DatabaseConnectionFailedException;
 import org.kainos.ea.client.CouldNotGeneratePasswordHashException;
 import org.kainos.ea.client.InvalidLoginAttemptException;
@@ -25,7 +25,7 @@ public class AuthServiceTest {
   AuthService authService = new AuthService();
   LoginRequest validLoginRequest = new LoginRequest("email", "password");
   LoginRequest invalidLoginRequest = new LoginRequest("invalidEmail", "invalidPassword");
-  AuthDAO authDAO = Mockito.mock(AuthDAO.class);
+  AuthDao authDAO = Mockito.mock(AuthDao.class);
 
   @Test
   void userLogin_shouldReturnValidToken_whenLoginWithValidCredentials () throws DatabaseConnectionFailedException,
