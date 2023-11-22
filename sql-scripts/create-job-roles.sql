@@ -14,3 +14,7 @@ INSERT INTO JobRoles (jobName, jobSpecUrl) VALUES
     ('UX Designer', "https://kainossoftwareltd.sharepoint.com/:b:/r/people/Job%20Specifications/Engineering/Job%20profile%20%20Test%20Engineer%20(Associate).pdf?csf=1&web=1&e=P3Pe76");
     ('Platform Solution Architect', "https://kainossoftwareltd.sharepoint.com/:b:/r/people/Job%20Specifications/Platforms/Job%20profile%20-%20Platform%20Solution%20Architect%20(Manager).pdf?csf=1&web=1&e=Wr9lCA");
     ('Test Engineer', "https://kainossoftwareltd.sharepoint.com/:b:/r/people/Job%20Specifications/Engineering/Job%20profile%20%20Test%20Engineer%20(Associate).pdf?csf=1&web=1&e=P3Pe76");
+
+UPDATE TheITCrowd_MiaG.JobRoles SET bandId=3 WHERE jobId=6;
+
+UPDATE JobRoles SET bandId = 6 WHERE jobId = 2;
