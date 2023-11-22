@@ -27,9 +27,13 @@ public class JobController {
     try {
       return Response.ok(jobService.getAllJobs()).build();
     }
-    catch(SQLException | CantGetAnyRolesException e){
+    catch(SQLException e){
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
+    catch(CantGetAnyRolesException e){
+      System.err.println(e.getMessage());
+      return Response.status(Response.Status.NOT_FOUND).build();
     }
   }
 }
