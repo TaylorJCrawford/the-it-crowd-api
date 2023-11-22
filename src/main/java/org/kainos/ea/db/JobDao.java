@@ -1,7 +1,7 @@
 package org.kainos.ea.db;
 
 import org.kainos.ea.cli.JobRoleResponse;
-import org.kainos.ea.cli.JobsResponse;
+import org.kainos.ea.cli.JobResponse;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class JobDao {
 
-  public List<JobsResponse> getAllJobs(Connection c) throws SQLException {
+  public List<JobResponse> getAllJobs(Connection c) throws SQLException {
 
     try (Statement st = c.createStatement()) {
 
@@ -22,10 +22,10 @@ public class JobDao {
               "LEFT JOIN Bands USING(bandId);";
 
       ResultSet rs = st.executeQuery(queryString);
-      List<JobsResponse> jobs = new ArrayList<>();
+      List<JobResponse> jobs = new ArrayList<>();
 
       while (rs.next()) {
-        JobsResponse job = new JobsResponse(
+        JobResponse job = new JobResponse(
                 rs.getInt("jobId"),
                 rs.getString("jobName")
         );
