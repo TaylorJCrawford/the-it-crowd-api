@@ -15,7 +15,7 @@ import java.util.List;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class BandIntegrationTest {
 
-    private static final String host = System.getenv("BASE_URL");
+    private static final String HOST = "http://localhost:8080";
 
     static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
             DropwizardTheITCrowdServiceApplication.class, null,
@@ -26,7 +26,7 @@ public class BandIntegrationTest {
     void getBands_shouldReturnListOfBands()  {
 
         // Construct the target URL with the host URL
-        String targetUrl = host + "/api/bands";
+        String targetUrl = HOST + "/api/bands";
 
         List<Job> response = APP.client().target(targetUrl)
                 .request()
