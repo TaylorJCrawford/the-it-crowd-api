@@ -23,13 +23,15 @@ ENV Variables
 To use DropwizardTheITCrowd API you will need to have the following environment variables
 
 
-| Environment Variable | Description               |
-|----------------------|---------------------------|
-| DB_USERNAME          | Database Account Password |
-| DB_PASSWORD          | Database Account Password |
-| DB_HOST              | Database Hostname         |
-| DB_NAME              | Database Schema Name      |
-
+| Environment Variable         | Description                                      |
+|------------------------------|--------------------------------------------------|
+| DB_USERNAME                  | Database Account Password                        |
+| DB_PASSWORD                  | Database Account Password                        |
+| DB_HOST                      | Database Hostname                                |
+| DB_NAME                      | Database Schema Name                             |
+| BASE_URL                     | Endpoint Of API Server                           |
+| TEST_VALID_EMAIL_API         | Email Address Of Account For Integration Testing |
+| TEST_VALID_USER_PASSWORD_API | Password Of Account For Integration Testing      |
 
 These have been used to connect to the aws database.
 
@@ -38,6 +40,9 @@ These have been used to connect to the aws database.
   export DB_PASSWORD=<Add DB Password Here>  
   export DB_HOST=<Add DB Hostname Here>  
   export DB_NAME=<Add DB Schema Name Here>  
+  export BASE_URL=<Add API Server Address Here>  
+  export TEST_VALID_EMAIL_API=<Add Test User Email Address Here>  
+  export TEST_VALID_USER_PASSWORD_API=<Add Test User Password Here>  
 ```
 
 Run Unit Tests

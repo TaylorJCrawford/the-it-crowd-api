@@ -14,7 +14,7 @@ import org.kainos.ea.cli.Job;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
 
-    private static final String host = System.getenv("BASE_URL");
+    private static final String HOST = "http://localhost:8080";
 
     static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
             DropwizardTheITCrowdServiceApplication.class, null,
@@ -25,7 +25,7 @@ public class JobIntegrationTest {
     void getJobRoles_shouldReturnListOfJobRoles()  {
 
         // Construct the target URL with the host URL
-        String targetUrl = host + "/api/jobs";
+        String targetUrl = HOST + "/api/jobs";
 
         List<Job> response = APP.client().target(targetUrl)
                 .request()

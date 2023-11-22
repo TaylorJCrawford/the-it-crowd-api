@@ -1,5 +1,4 @@
-package org.kainos.ea.controller;
-
+package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.JobService;
 import org.kainos.ea.client.CantGetAnyRolesException;
