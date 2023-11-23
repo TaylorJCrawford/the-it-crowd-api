@@ -2,7 +2,8 @@ package org.kainos.ea.api;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobResponse;
+import org.kainos.ea.cli.JobRoleResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
@@ -30,10 +31,10 @@ public class JobServiceTest {
   @Test
   void getAllJobs_shouldReturnListOfJobs() throws SQLException, CantGetAnyRolesException {
     // Arrange
-    List<Job> jobList = new ArrayList<>();
+    List<JobResponse> jobList = new ArrayList<>();
 
-    Job job1 = new Job(1, "Software Engineer", "https://www.something.com", "Band 6");
-    Job job2 = new Job(2, "Test Engineer", "https://www.something.com", "Band 4");
+    JobResponse job1 = new JobResponse(1, "Software Engineer");
+    JobResponse job2 = new JobResponse(2, "Test Engineer");
 
     jobList.add(job1);
     jobList.add(job2);
@@ -44,7 +45,7 @@ public class JobServiceTest {
     Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(jobList);
 
     // Act
-    List<Job> result = jobService.getAllJobs();
+    List<JobResponse> result = jobService.getAllJobs();
 
     // Assert
     assertEquals(jobList, result);
@@ -76,8 +77,11 @@ public class JobServiceTest {
 
   @Test
   void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
+    List<String> responsibilities = new ArrayList<>();
+    responsibilities.add("uno");
+
     int id = 1;
-    Job job = new Job(id, "Software Engineer", "https://www.sample.co.uk/", "Band 3");
+    JobRoleResponse job = new JobRoleResponse(id, "Software Engineer", "https://www.sample.co.uk/", responsibilities, "Band 3");
 
     Connection mockConnection = Mockito.mock(Connection.class);
 
@@ -85,7 +89,7 @@ public class JobServiceTest {
     Mockito.when(jobDao.getJobById(id, mockConnection)).thenReturn(job);
 
     // Act
-    Job result = jobService.getJobById(id);
+    JobRoleResponse result = jobService.getJobById(id);
 
     // Assert
     assertEquals(job, result);
