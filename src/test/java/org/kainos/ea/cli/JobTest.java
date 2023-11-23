@@ -9,15 +9,24 @@ public class JobTest {
     @Test
     void getterAndSetterJobRoleTest() {
 
+        int jobRoleId = 1;
+        String jobRoleTitle = "testName";
+        String capabilityName = "testCapability";
+        String testUrlName = "testUrl";
+        String bandName = "testBandName";
 
-        int jobRoleId = 2;
-        String jobRoleTitle = "Senior Software Engineer";
-        String bandName = "Band 6";
+        Job job1 = new Job(1,"testName","testCapability","testUrl","testBandName");
 
-        Job job = new Job(jobRoleId, jobRoleTitle, "https://software-engineer.org", bandName);
+        job1.setJobId(jobRoleId);
+        job1.setJobName(jobRoleTitle);
+        job1.setJobCapabilityName(capabilityName);
+        job1.setJobSpecUrl(testUrlName);
+        job1.setBandName(bandName);
 
-        assertEquals(job.getJobId(), jobRoleId);
-        assertEquals(job.getJobName(), jobRoleTitle);
-        assertEquals(job.getBandName(), bandName);
+        assertEquals(job1.getJobId(), jobRoleId);
+        assertEquals(job1.getJobName(), jobRoleTitle);
+        assertEquals(job1.getJobCapabilityName(), capabilityName);
+        assertEquals(job1.getJobSpecUrl(), testUrlName);
+        assertEquals(job1.getBandName(), bandName);
     }
 }

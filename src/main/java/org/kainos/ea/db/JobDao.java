@@ -39,17 +39,20 @@ public class JobDao {
   public List<Job> getAllJobs(Connection c) throws SQLException {
 
     try (Statement st = c.createStatement()) {
-      String queryString = "SELECT jobId, jobName, jobSpecUrl, bandName " +
-              "FROM JobRoles " +
-              "LEFT JOIN Bands USING(bandId);";
+
+      String queryString = "SELECT jobId, jobName, bandName, jobCapabilityName, jobSpecUrl " +
+                "FROM JobRoles LEFT JOIN Bands USING(bandId) " +
+                "LEFT JOIN JobCapabilities USING(jobCapabilityId);";
 
       ResultSet rs = st.executeQuery(queryString);
+
       List<Job> jobs = new ArrayList<>();
 
       while (rs.next()) {
         Job job = new Job(
                 rs.getInt("jobId"),
                 rs.getString("jobName"),
+                rs.getString("jobCapabilityName"),
                 rs.getString("jobSpecUrl"),
                 rs.getString("bandName")
         );
@@ -60,9 +63,11 @@ public class JobDao {
   }
 
   public Job getJobById(int id, Connection c) throws SQLException {
-    String sql = "SELECT jobId, jobName, jobSpecUrl, bandName FROM JobRoles " +
-            "LEFT JOIN Bands USING(bandId)"
-            + "WHERE jobId = ?";
+    String sql = "SELECT jobId, jobName, bandName, jobCapabilityName, jobSpecUrl " +
+            "FROM JobRoles LEFT JOIN Bands USING(bandId) " +
+            "LEFT JOIN JobCapabilities USING(jobCapabilityId)" +
+            "WHERE jobId = ?;";
+
 
     try (PreparedStatement st = c.prepareStatement(sql)) {
       st.setInt(1, id);
@@ -71,6 +76,7 @@ public class JobDao {
         return new Job(
                 rs.getInt("jobId"),
                 rs.getString("jobName"),
+                rs.getString("jobCapabilityName"),
                 rs.getString("jobSpecUrl"),
                 rs.getString("bandName")
         );

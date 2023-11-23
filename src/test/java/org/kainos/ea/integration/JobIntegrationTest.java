@@ -14,14 +14,15 @@ import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.cli.Job;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javax.ws.rs.core.Response;
-import javax.xml.crypto.Data;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
   private static final String HOST = "http://localhost:8080";
+
   private final DatabaseConnector databaseConnector = new DatabaseConnector();
 
   static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
@@ -31,53 +32,56 @@ public class JobIntegrationTest {
 
   @Test
   void getJobRoles_shouldReturnListOfJobRoles() {
-    // Construct the target URL with the HOST URL
+
+    // Construct the target URL with the host URL
     String targetUrl = HOST + "/api/jobs";
 
     List<Job> response = APP.client().target(targetUrl)
             .request()
             .get(List.class);
 
-        Assertions.assertTrue(response.size() > 0);
-    }
+    Assertions.assertFalse(response.isEmpty());
+    Assertions.assertTrue(response.size() > 0);
 
-    @Test
-    void deleteJobRole_shouldDeleteWhenCalled() throws SQLException {
-        JobRequest jobRequest = new JobRequest(
-                100,
-                "Teacher",
-                1,
-                1,
-                "Teacher",
-                "www.example.com"
-        );
+  }
 
-        JobDao dao = new JobDao();
-        int returnedId = dao.createJobRole(databaseConnector.getConnection(), jobRequest);
+  @Test
+  void deleteJobRole_shouldDeleteWhenCalled() throws SQLException {
+    JobRequest jobRequest = new JobRequest(
+            100,
+            "Teacher",
+            1,
+            1,
+            "Teacher",
+            "www.example.com"
+    );
 
-        // Construct the target URL with the host URL
-        String targetUrl = HOST + "/api/jobs/" +returnedId;
+    JobDao dao = new JobDao();
+    int returnedId = dao.createJobRole(databaseConnector.getConnection(), jobRequest);
 
-        System.out.println(returnedId);
+    // Construct the target URL with the host URL
+    String targetUrl = HOST + "/api/jobs/" + returnedId;
 
-        Response response = APP.client().target(targetUrl)
-                .request()
-                .delete();
+    System.out.println(returnedId);
 
-        assertEquals(204, response.getStatus());
-    }
+    Response response = APP.client().target(targetUrl)
+            .request()
+            .delete();
 
-    @Test
-    void deleteJobRole_shouldThrowErrorCode404IfNotFound() throws SQLException {
-        // Construct the target URL with the host URL
-        String targetUrl = HOST + "/api/jobs/0";
+    assertEquals(204, response.getStatus());
+  }
 
-        Response response = APP.client().target(targetUrl)
-                .request()
-                .delete();
+  @Test
+  void deleteJobRole_shouldThrowErrorCode404IfNotFound() throws SQLException {
+    // Construct the target URL with the host URL
+    String targetUrl = HOST + "/api/jobs/0";
 
-        assertEquals(404, response.getStatus());
-    }
+    Response response = APP.client().target(targetUrl)
+            .request()
+            .delete();
+
+    assertEquals(404, response.getStatus());
+  }
 
   @Test
   void getJobRoleById_shouldReturnJobRequest() {

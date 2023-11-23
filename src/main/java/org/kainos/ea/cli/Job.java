@@ -6,17 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Job {
   private int jobId;
   private String jobName;
-  private String bandName;
+  private String jobCapabilityName;
   private String jobSpecUrl;
+  private String bandName;
 
   @JsonCreator
   public Job(
           @JsonProperty("jobId") int jobId,
           @JsonProperty("jobName") String jobName,
+          @JsonProperty("jobCapabilityName") String jobCapabilityName,
           @JsonProperty("jobSpecUrl") String jobSpecUrl,
           @JsonProperty("bandName") String bandName) {
     this.jobId = jobId;
     this.jobName = jobName;
+    this.jobCapabilityName = jobCapabilityName;
     this.jobSpecUrl = jobSpecUrl;
     this.bandName = bandName;
   }
@@ -35,6 +38,14 @@ public class Job {
 
   public void setJobName(String jobName) {
     this.jobName = jobName;
+  }
+
+  public String getJobCapabilityName() {
+    return jobCapabilityName;
+  }
+
+  public void setJobCapabilityName(String jobCapabilityName) {
+    this.jobCapabilityName = jobCapabilityName;
   }
 
   public String getJobSpecUrl() {

@@ -5,7 +5,6 @@ import org.kainos.ea.api.JobService;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.client.DoesNotExistException;
 import org.kainos.ea.client.FailedToDeleteException;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,15 +24,21 @@ public class JobController {
     this.jobService = jobService;
   }
 
+
   @GET
   @Path("/jobs")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobs() {
     try {
-      return Response.ok(this.jobService.getAllJobs()).build();
-    } catch (SQLException | CantGetAnyRolesException e) {
+      return Response.ok(jobService.getAllJobs()).build();
+    }
+    catch(SQLException e){
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
+    catch(CantGetAnyRolesException e){
+      System.err.println(e.getMessage());
+      return Response.status(Response.Status.NOT_FOUND).build();
     }
   }
 
