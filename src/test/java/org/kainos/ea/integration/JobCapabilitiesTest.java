@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobCapabilitiesTest {
 
-  private static final String host = System.getenv("BASE_URL");
+  private static final String HOST = "http://localhost:8080";
 
   static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
           DropwizardTheITCrowdServiceApplication.class, null,
@@ -28,7 +28,7 @@ public class JobCapabilitiesTest {
   void getJobAllCapabilities_shouldReturnListOfJobCapabilities()  {
 
     // Construct the target URL with the host URL
-    String targetUrl = host + "/api/job-capabilities";
+    String targetUrl = HOST + "/api/job-capabilities";
 
     List<Job> response = APP.client().target(targetUrl)
             .request()
@@ -46,7 +46,7 @@ public class JobCapabilitiesTest {
     JobCapabilityRequest expected = new JobCapabilityRequest("Platforms");
 
     // Construct the target URL with the host URL
-    String targetUrl = host + "/api/job-capabilities/" + id;
+    String targetUrl = HOST + "/api/job-capabilities/" + id;
 
     // Use a generic type to correctly deserialize the response
     JobCapabilityRequest response = APP.client().target(targetUrl)
