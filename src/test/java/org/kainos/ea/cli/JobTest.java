@@ -8,16 +8,13 @@ public class JobTest {
 
     @Test
     void getterAndSetterJobRoleTest() {
-        Job job = new Job();
+
 
         int jobRoleId = 2;
         String jobRoleTitle = "Senior Software Engineer";
         String bandName = "Band 6";
 
-        job.setJobId(jobRoleId);
-        job.setJobName(jobRoleTitle);
-        job.setJobSpecUrl("https://software-engineer.org");
-        job.setBandName(bandName);
+        Job job = new Job(jobRoleId, jobRoleTitle, "https://software-engineer.org", bandName);
 
         assertEquals(job.getJobId(), jobRoleId);
         assertEquals(job.getJobName(), jobRoleTitle);

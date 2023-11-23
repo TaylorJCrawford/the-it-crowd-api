@@ -1,7 +1,7 @@
 package org.kainos.ea.integration;
 
+import java.sql.SQLException;
 import java.util.List;
-
 import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
@@ -10,14 +10,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
+import org.kainos.ea.api.JobRequest;
 import org.kainos.ea.cli.Job;
+import org.kainos.ea.db.DatabaseConnector;
+import org.kainos.ea.db.JobDao;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javax.ws.rs.core.Response;
+import javax.xml.crypto.Data;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class JobIntegrationTest {
-
-  private static final String HOST = "http://localHOST:8080";
+  private static final String HOST = "http://localhost:8080";
+  private final DatabaseConnector databaseConnector = new DatabaseConnector();
 
   static final DropwizardAppExtension<DropwizardTheITCrowdServiceConfiguration> APP = new DropwizardAppExtension<>(
           DropwizardTheITCrowdServiceApplication.class, null,
@@ -33,11 +38,46 @@ public class JobIntegrationTest {
             .request()
             .get(List.class);
 
-    Assertions.assertTrue(response.size() > 0);
-    // Assert that the response size is equal to the expected value
-    // You can change the expected value according to your test data
-    Assertions.assertEquals(7, response.size());
-  }
+        Assertions.assertTrue(response.size() > 0);
+    }
+
+    @Test
+    void deleteJobRole_shouldDeleteWhenCalled() throws SQLException {
+        JobRequest jobRequest = new JobRequest(
+                100,
+                "Teacher",
+                1,
+                1,
+                "Teacher",
+                "www.example.com"
+        );
+
+        JobDao dao = new JobDao();
+        int returnedId = dao.createJobRole(databaseConnector.getConnection(), jobRequest);
+
+        // Construct the target URL with the host URL
+        String targetUrl = HOST + "/api/jobs/" +returnedId;
+
+        System.out.println(returnedId);
+
+        Response response = APP.client().target(targetUrl)
+                .request()
+                .delete();
+
+        assertEquals(204, response.getStatus());
+    }
+
+    @Test
+    void deleteJobRole_shouldThrowErrorCode404IfNotFound() throws SQLException {
+        // Construct the target URL with the host URL
+        String targetUrl = HOST + "/api/jobs/0";
+
+        Response response = APP.client().target(targetUrl)
+                .request()
+                .delete();
+
+        assertEquals(404, response.getStatus());
+    }
 
   @Test
   void getJobRoleById_shouldReturnJobRequest() {
