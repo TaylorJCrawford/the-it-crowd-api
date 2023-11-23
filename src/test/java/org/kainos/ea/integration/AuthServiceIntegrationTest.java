@@ -35,11 +35,12 @@ public class AuthServiceIntegrationTest {
             testUserPassword
     );
 
-    Response response  = APP.client().target(host + "/api/auth/login")
+
+    Response response = APP.client().target(host + "/api/auth/login")
             .request()
             .post(Entity.entity(loginRequest, MediaType.APPLICATION_JSON_TYPE));
 
-    Assertions.assertEquals(200,response.getStatus());
+    Assertions.assertEquals(200, response.getStatus());
     Assertions.assertNotNull(response.readEntity(String.class));
 
   }
@@ -55,10 +56,10 @@ public class AuthServiceIntegrationTest {
             testUserPassword
     );
 
-    Response response  = APP.client().target(host + "/api/auth/login")
+    Response response = APP.client().target(host + "/api/auth/login")
             .request()
             .post(Entity.entity(loginRequest, MediaType.APPLICATION_JSON_TYPE));
 
-    Assertions.assertEquals(403,response.getStatus());
+    Assertions.assertEquals(403, response.getStatus());
   }
 }
