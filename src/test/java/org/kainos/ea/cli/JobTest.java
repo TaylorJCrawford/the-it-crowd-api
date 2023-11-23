@@ -9,23 +9,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JobTest {
 
-    @Test
-    void getterAndSetterJobRoleTest() {
-        String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
-        List<String> responsibilitiesList = Arrays.asList(responsibilities);
+  @Test
+  void getterAndSetterJobRoleTest() {
+    String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
+    List<String> responsibilitiesList = Arrays.asList(responsibilities);
 
-        JobRoleResponse job = new JobRoleResponse(1, "Software Engineer", "www.test.com","Associate", responsibilitiesList);
+    JobRoleResponse job = new JobRoleResponse(1, "Software Engineer", "www.test.com", responsibilitiesList, "Band 5");
 
-        int jobRoleId = 2;
-        String jobRoleTitle = "Senior Software Engineer";
-        String bandName = "Band 6";
+    int jobRoleId = 2;
+    String jobRoleTitle = "Senior Software Engineer";
+    String bandName = "Band 6";
 
-        job.setJobId(jobRoleId);
-        job.setJobName(jobRoleTitle);
-        job.setBandName(bandName);
+    job.setJobId(jobRoleId);
+    job.setJobName(jobRoleTitle);
+    job.setJobSpecUrl("https://software-engineer.org");
+    job.setBandName(bandName);
 
-        assertEquals(job.getJobId(), jobRoleId);
-        assertEquals(job.getJobName(), jobRoleTitle);
-        assertEquals(job.getBandName(), bandName);
-    }
+    assertEquals(job.getJobId(), jobRoleId);
+    assertEquals(job.getJobName(), jobRoleTitle);
+    assertEquals(job.getBandName(), bandName);
+  }
 }

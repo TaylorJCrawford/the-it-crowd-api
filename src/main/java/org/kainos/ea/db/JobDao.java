@@ -16,8 +16,7 @@ public class JobDao {
   public List<JobResponse> getAllJobs(Connection c) throws SQLException {
 
     try (Statement st = c.createStatement()) {
-
-      String queryString = "SELECT jobId, jobName " +
+      String queryString = "SELECT jobId, jobName, jobSpecUrl, bandName " +
               "FROM JobRoles " +
               "LEFT JOIN Bands USING(bandId);";
 
@@ -64,8 +63,8 @@ public class JobDao {
                 jobRs.getInt("jobId"),
                 jobRs.getString("jobName"),
                 jobRs.getString("jobSpecUrl"),
-                jobRs.getString("bandName"),
-                responsibilities
+                responsibilities,
+                jobRs.getString("bandName")
         );
       }
       return null;

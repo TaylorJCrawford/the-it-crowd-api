@@ -17,13 +17,16 @@ public class JobRoleResponse {
           @JsonProperty("jobId") int jobId,
           @JsonProperty("jobName") String jobName,
           @JsonProperty("jobSpecUrl") String jobSpecUrl,
-          @JsonProperty("bandName") String bandName,
-          @JsonProperty("responsibilities") List<String> responsibilities) {
+          @JsonProperty("responsibilities") List<String> responsibilities,
+          @JsonProperty("bandName") String bandName) {
     this.jobId = jobId;
     this.jobName = jobName;
     this.jobSpecUrl = jobSpecUrl;
     this.bandName = bandName;
     this.responsibilities = responsibilities;
+  }
+
+  public JobRoleResponse() {
   }
 
   public int getJobId() {

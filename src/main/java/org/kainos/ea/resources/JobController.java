@@ -1,4 +1,4 @@
-package org.kainos.ea.controller;
+package org.kainos.ea.resources;
 
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.JobService;
@@ -22,21 +22,15 @@ public class JobController {
     this.jobService = jobService;
   }
 
-
   @GET
   @Path("/jobs")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobs() {
     try {
-      return Response.ok(jobService.getAllJobs()).build();
-    } catch (SQLException e) {
+      return Response.ok(this.jobService.getAllJobs()).build();
+    } catch (SQLException | CantGetAnyRolesException e) {
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-    } catch (CantGetAnyRolesException e) {
-      System.err.println(e.getMessage());
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-              .entity("Job roles retrieval error: " + e.getMessage())
-              .build();
     }
   }
 
@@ -45,7 +39,7 @@ public class JobController {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getJobById(@PathParam("id") int id) {
     try {
-      return Response.ok(jobService.getJobById(id)).build();
+      return Response.ok(this.jobService.getJobById(id)).build();
     } catch (SQLException e) {
       System.err.println(e.getMessage());
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

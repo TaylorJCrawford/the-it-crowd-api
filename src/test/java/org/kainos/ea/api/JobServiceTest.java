@@ -1,10 +1,8 @@
-package org.kainos.ea.service;
+package org.kainos.ea.api;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.api.JobService;
-import org.kainos.ea.cli.JobRoleResponse;
-import org.kainos.ea.cli.JobResponse;
+import org.kainos.ea.cli.Job;
 import org.kainos.ea.client.CantGetAnyRolesException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
@@ -14,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,10 +30,10 @@ public class JobServiceTest {
   @Test
   void getAllJobs_shouldReturnListOfJobs() throws SQLException, CantGetAnyRolesException {
     // Arrange
-    List<JobResponse> jobList = new ArrayList<>();
+    List<Job> jobList = new ArrayList<>();
 
-    JobResponse job1 = new JobResponse(1, "Software Engineer");
-    JobResponse job2 = new JobResponse(2, "Test Engineer");
+    Job job1 = new Job(1, "Software Engineer", "https://www.something.com", "Band 6");
+    Job job2 = new Job(2, "Test Engineer", "https://www.something.com", "Band 4");
 
     jobList.add(job1);
     jobList.add(job2);
@@ -47,7 +44,7 @@ public class JobServiceTest {
     Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(jobList);
 
     // Act
-    List<JobResponse> result = jobService.getAllJobs();
+    List<Job> result = jobService.getAllJobs();
 
     // Assert
     assertEquals(jobList, result);
@@ -80,10 +77,7 @@ public class JobServiceTest {
   @Test
   void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
     int id = 1;
-
-    String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
-    List<String> responsibilitiesList = Arrays.asList(responsibilities);
-    JobRoleResponse job = new JobRoleResponse(id, "Software Engineer", "https://www.sample.co.uk/", responsibilitiesList, "band 5");
+    Job job = new Job(id, "Software Engineer", "https://www.sample.co.uk/", "Band 3");
 
     Connection mockConnection = Mockito.mock(Connection.class);
 
@@ -91,7 +85,7 @@ public class JobServiceTest {
     Mockito.when(jobDao.getJobById(id, mockConnection)).thenReturn(job);
 
     // Act
-    JobRoleResponse result = jobService.getJobById(id);
+    Job result = jobService.getJobById(id);
 
     // Assert
     assertEquals(job, result);
