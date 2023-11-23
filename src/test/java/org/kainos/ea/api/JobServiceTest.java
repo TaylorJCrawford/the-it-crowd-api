@@ -20,56 +20,87 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 public class JobServiceTest {
 
-    JobDao jobDao = Mockito.mock(JobDao.class);
-    DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
+  JobDao jobDao = Mockito.mock(JobDao.class);
+  DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
 
-    JobService jobService = new JobService(jobDao, databaseConnector);
 
-    @Test
-    void getAllJobs_shouldReturnListOfJobs() throws SQLException, CantGetAnyRolesException {
-        // Arrange
-        List<Job> jobList = new ArrayList<>();
+  JobService jobService = new JobService(jobDao, databaseConnector);
+
+  @Test
+  void getAllJobs_shouldReturnListOfJobs() throws SQLException, CantGetAnyRolesException {
+    // Arrange
+    List<Job> jobList = new ArrayList<>();
 
         Job job1 = new Job(1,"testName","testCapability","testUrl","testBandName");
         Job job2 = new Job(2,"testName2","testCapability2","testUrl2","testBandName2");
 
 
-        jobList.add(job1);
-        jobList.add(job2);
+    jobList.add(job1);
+    jobList.add(job2);
 
-        Connection mockConnection = Mockito.mock(Connection.class);
+    Connection mockConnection = Mockito.mock(Connection.class);
 
-        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(jobList);
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(jobList);
 
-        // Act
-        List<Job> result = jobService.getAllJobs();
+    // Act
+    List<Job> result = jobService.getAllJobs();
 
-        // Assert
-        assertEquals(jobList, result);
-    }
+    // Assert
+    assertEquals(jobList, result);
+  }
 
-    @Test
-    void getAllJobs_shouldThrowExceptionWhenDatabaseConnectionFails() throws SQLException {
-        // Arrange
-        Connection mockConnection = Mockito.mock(Connection.class);
+  @Test
+  void getAllJobs_shouldThrowExceptionWhenDatabaseConnectionFails() throws SQLException {
+    // Arrange
+    Connection mockConnection = Mockito.mock(Connection.class);
 
-        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getAllJobs(mockConnection)).thenThrow(SQLException.class);
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getAllJobs(mockConnection)).thenThrow(SQLException.class);
 
-        // Act & Assert
-        assertThrows(SQLException.class, () -> jobService.getAllJobs());
-    }
+    // Act & Assert
+    assertThrows(SQLException.class, () -> jobService.getAllJobs());
+  }
 
-    @Test
-    void getAllJobs_shouldThrowExceptionWhenResponseIsNull() throws SQLException {
-        // Arrange
-        Connection mockConnection = Mockito.mock(Connection.class);
+  @Test
+  void getAllJobs_shouldThrowExceptionWhenResponseIsNull() throws SQLException {
+    // Arrange
+    Connection mockConnection = Mockito.mock(Connection.class);
 
-        Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-        Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(Collections.emptyList());
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getAllJobs(mockConnection)).thenReturn(Collections.emptyList());
 
-        // Act & Assert
-        assertThrows(CantGetAnyRolesException.class, () -> jobService.getAllJobs());
-    }
+    // Act & Assert
+    assertThrows(CantGetAnyRolesException.class, () -> jobService.getAllJobs());
+  }
+
+  @Test
+  void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
+    int id = 1;
+    Job job = new Job(1,"testName","testCapability","testUrl","testBandName");
+
+    Connection mockConnection = Mockito.mock(Connection.class);
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobById(id, mockConnection)).thenReturn(job);
+
+    // Act
+    Job result = jobService.getJobById(id);
+
+    // Assert
+    assertEquals(job, result);
+  }
+
+  @Test
+  void getJobById_shouldThrowExceptionWhenNotFound() throws SQLException, CantGetAnyRolesException {
+    int id = 111;
+
+    Connection mockConnection = Mockito.mock(Connection.class);
+
+    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
+    Mockito.when(jobDao.getJobById(id, mockConnection)).thenReturn(null);
+
+    // Act & Assert
+    assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
+  }
 }

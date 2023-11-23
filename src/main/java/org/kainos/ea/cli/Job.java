@@ -1,5 +1,8 @@
 package org.kainos.ea.cli;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Job {
   private int jobId;
   private String jobName;
@@ -7,13 +10,22 @@ public class Job {
   private String jobSpecUrl;
   private String bandName;
 
-
-  public Job(int jobId, String jobName, String jobCapabilityName, String jobSpecUrl,  String bandName) {
+  @JsonCreator
+  public Job(
+          @JsonProperty("jobId") int jobId,
+          @JsonProperty("jobName") String jobName,
+          @JsonProperty("jobCapabilityName") String jobCapabilityName,
+          @JsonProperty("jobSpecUrl") String jobSpecUrl,
+          @JsonProperty("bandName") String bandName) {
     this.jobId = jobId;
     this.jobName = jobName;
     this.jobCapabilityName = jobCapabilityName;
     this.jobSpecUrl = jobSpecUrl;
     this.bandName = bandName;
+  }
+
+  public Job() {
+
   }
 
   public int getJobId() {
@@ -56,5 +68,3 @@ public class Job {
     this.bandName = bandName;
   }
 }
-
-
