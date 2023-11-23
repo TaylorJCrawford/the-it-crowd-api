@@ -1,4 +1,4 @@
-package org.kainos.ea.controller;
+package org.kainos.ea.resources;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -8,7 +8,7 @@ import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.kainos.ea.api.JobCapabilityService;
 import org.kainos.ea.api.BandService;
 import org.kainos.ea.api.JobService;
-import org.kainos.ea.controller.BandController;
+import org.kainos.ea.resources.BandController;
 import org.kainos.ea.db.BandDao;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobCapabilityDao;
