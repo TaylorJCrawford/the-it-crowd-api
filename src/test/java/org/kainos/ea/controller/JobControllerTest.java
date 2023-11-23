@@ -22,9 +22,9 @@ public class JobControllerTest {
     void getJobs_shouldReturn200Response_whenJobServiceDoesNotThrowException() throws CantGetAnyRolesException, SQLException {
         int expectedStatusCode = 200;
 
-        Job job1 = new Job(1,"Testing Engineer", "Manager");
-        Job job2 = new Job(2,"Testing2 Engineer", "Manager");
-        Job job3 = new Job(3,"Testing3 Engineer", "Manager");
+        Job job1 = new Job(1,"Testing Engineer", "https://manager-spec.org", "Band 3");
+        Job job2 = new Job(1,"Data Engineer", "https://data-engineer-spec.org", "Band 5");
+        Job job3 = new Job(1,"Platform Engineer", "https://platofrm-engineer-spec.org", "Band 3");
 
         List<Job> jobs = new ArrayList<>();
         jobs.add(job1);
