@@ -24,10 +24,6 @@ public class Job {
     this.bandName = bandName;
   }
 
-  public Job() {
-
-  }
-
   public int getJobId() {
     return jobId;
   }

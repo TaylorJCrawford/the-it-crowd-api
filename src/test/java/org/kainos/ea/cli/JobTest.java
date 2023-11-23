@@ -9,13 +9,13 @@ public class JobTest {
     @Test
     void getterAndSetterJobRoleTest() {
 
-        Job job1 = new Job(1,"testName","testCapability","testUrl","testBandName");
-
         int jobRoleId = 1;
         String jobRoleTitle = "testName";
         String capabilityName = "testCapability";
         String testUrlName = "testUrl";
         String bandName = "testBandName";
+
+        Job job1 = new Job(1,"testName","testCapability","testUrl","testBandName");
 
         job1.setJobId(jobRoleId);
         job1.setJobName(jobRoleTitle);
