@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class JobServiceTest {
   JobDao jobDao = Mockito.mock(JobDao.class);
   DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
 
-
   JobService jobService = new JobService(jobDao, databaseConnector);
 
   @Test
@@ -35,8 +33,8 @@ public class JobServiceTest {
     // Arrange
     List<JobResponse> jobList = new ArrayList<>();
 
-    JobResponse job1 = new JobResponse(1, "Software Engineer");
-    JobResponse job2 = new JobResponse(2, "Test Engineer");
+    JobResponse job1 = new JobResponse(1, "Software Engineer", "Associate", "Engineering", "https://exmaple.com");
+    JobResponse job2 = new JobResponse(1, "Test Engineer", "Associate", "Engineering", "https://exmaple.com");
 
     jobList.add(job1);
     jobList.add(job2);
@@ -81,9 +79,14 @@ public class JobServiceTest {
   void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
     int id = 1;
 
-    String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
-    List<String> responsibilitiesList = Arrays.asList(responsibilities);
-    JobRoleResponse job = new JobRoleResponse(id, "Software Engineer", "https://www.sample.co.uk/", responsibilitiesList, "band 5");
+    JobRoleResponse job = new JobRoleResponse(
+        id,
+        "Software Engineer",
+        "Associate",
+        "https://www.sample.co.uk/",
+        List.of("responsibility 1", "responsibility 2", "responsibility 3"),
+        "band 5"
+    );
 
     Connection mockConnection = Mockito.mock(Connection.class);
 

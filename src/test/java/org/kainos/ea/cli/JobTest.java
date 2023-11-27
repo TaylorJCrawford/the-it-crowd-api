@@ -14,11 +14,13 @@ public class JobTest {
     String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
     List<String> responsibilitiesList = Arrays.asList(responsibilities);
 
-    JobRoleResponse job = new JobRoleResponse(1, "Software Engineer", "www.test.com", responsibilitiesList, "Band 5");
+    JobRoleResponse job = new JobRoleResponse(1, "Software Engineer", "Associate", "www.test.com", responsibilitiesList, "Band 5");
 
-    int jobRoleId = 2;
-    String jobRoleTitle = "Senior Software Engineer";
-    String bandName = "Band 6";
+    int jobRoleId = 1;
+    String jobRoleTitle = "testName";
+        String capabilityName = "testCapability";
+        String testUrlName = "testUrl";
+    String bandName = "testBandName";
 
     job.setJobId(jobRoleId);
     job.setJobName(jobRoleTitle);

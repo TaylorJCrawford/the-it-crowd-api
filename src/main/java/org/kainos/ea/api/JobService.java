@@ -3,6 +3,8 @@ package org.kainos.ea.api;
 import org.kainos.ea.cli.JobRoleResponse;
 import org.kainos.ea.cli.JobResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
+import org.kainos.ea.client.DoesNotExistException;
+import org.kainos.ea.client.FailedToDeleteException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import java.sql.SQLException;
@@ -26,11 +28,23 @@ public class JobService {
     }
     return jobs;
   }
+
   public JobRoleResponse getJobById(int id) throws SQLException, CantGetAnyRolesException {
     JobRoleResponse job = jobDao.getJobById(id, databaseConnector.getConnection());
     if(job == null){
       throw new CantGetAnyRolesException();
     }
     return job;
+  }
+
+  public void deleteJobRole(int id) throws FailedToDeleteException, DoesNotExistException {
+    try {
+      if (jobDao.getJobById(id, databaseConnector.getConnection()) == null) {
+        throw new DoesNotExistException("Specified jobID (" +id +") does not exist.");
+      }
+      jobDao.deleteJobRole(id, databaseConnector.getConnection());
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+    }
   }
 }
