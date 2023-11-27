@@ -2,31 +2,33 @@ package org.kainos.ea.cli;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JobTest {
 
-    @Test
-    void getterAndSetterJobRoleTest() {
+  @Test
+  void getterAndSetterJobRoleTest() {
+    String[] responsibilities = {"responsibility 1", "responsibility 2", "responsibility 3"};
+    List<String> responsibilitiesList = Arrays.asList(responsibilities);
 
-        int jobRoleId = 1;
-        String jobRoleTitle = "testName";
+    JobRoleResponse job = new JobRoleResponse(1, "Software Engineer", "Associate", "www.test.com", responsibilitiesList, "Band 5");
+
+    int jobRoleId = 1;
+    String jobRoleTitle = "testName";
         String capabilityName = "testCapability";
         String testUrlName = "testUrl";
-        String bandName = "testBandName";
+    String bandName = "testBandName";
 
-        Job job1 = new Job(1,"testName","testCapability","testUrl","testBandName");
+    job.setJobId(jobRoleId);
+    job.setJobName(jobRoleTitle);
+    job.setJobSpecUrl("https://software-engineer.org");
+    job.setBandName(bandName);
 
-        job1.setJobId(jobRoleId);
-        job1.setJobName(jobRoleTitle);
-        job1.setJobCapabilityName(capabilityName);
-        job1.setJobSpecUrl(testUrlName);
-        job1.setBandName(bandName);
-
-        assertEquals(job1.getJobId(), jobRoleId);
-        assertEquals(job1.getJobName(), jobRoleTitle);
-        assertEquals(job1.getJobCapabilityName(), capabilityName);
-        assertEquals(job1.getJobSpecUrl(), testUrlName);
-        assertEquals(job1.getBandName(), bandName);
-    }
+    assertEquals(job.getJobId(), jobRoleId);
+    assertEquals(job.getJobName(), jobRoleTitle);
+    assertEquals(job.getBandName(), bandName);
+  }
 }

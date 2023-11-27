@@ -1,25 +1,24 @@
-package org.kainos.ea.api;
+package org.kainos.ea.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.kainos.ea.cli.JobResponse;
+import org.kainos.ea.api.JobService;
 import org.kainos.ea.cli.JobRoleResponse;
+import org.kainos.ea.cli.JobResponse;
 import org.kainos.ea.client.CantGetAnyRolesException;
-import org.kainos.ea.client.DoesNotExistException;
-import org.kainos.ea.client.FailedToDeleteException;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class JobServiceTest {
@@ -34,8 +33,8 @@ public class JobServiceTest {
     // Arrange
     List<JobResponse> jobList = new ArrayList<>();
 
-    JobResponse job1 = new JobResponse(1, "Software Engineer", "Associate", "Engineering", "https://example.com");
-    JobResponse job2 = new JobResponse(2, "Test Engineer", "Associate", "Engineering", "https://example.com");
+    JobResponse job1 = new JobResponse(1, "Software Engineer", "Associate", "Engineering", "https://exmaple.com");
+    JobResponse job2 = new JobResponse(1, "Test Engineer", "Associate", "Engineering", "https://exmaple.com");
 
     jobList.add(job1);
     jobList.add(job2);
@@ -78,11 +77,16 @@ public class JobServiceTest {
 
   @Test
   void getJobById_shouldReturnJob() throws SQLException, CantGetAnyRolesException {
-    List<String> responsibilities = new ArrayList<>();
-    responsibilities.add("uno");
-
     int id = 1;
-    JobRoleResponse job = new JobRoleResponse(id, "Software Engineer", "Associate", "https://www.sample.co.uk/", responsibilities, "Band 3");
+
+    JobRoleResponse job = new JobRoleResponse(
+        id,
+        "Software Engineer",
+        "Associate",
+        "https://www.sample.co.uk/",
+        List.of("responsibility 1", "responsibility 2", "responsibility 3"),
+        "band 5"
+    );
 
     Connection mockConnection = Mockito.mock(Connection.class);
 
@@ -107,17 +111,5 @@ public class JobServiceTest {
 
     // Act & Assert
     assertThrows(CantGetAnyRolesException.class, () -> jobService.getJobById(id));
-  }
-
-  @Test
-  void deleteJobRole_shouldDeleteJobWhenCalled() throws SQLException, FailedToDeleteException, DoesNotExistException {
-    Connection mockConnection = Mockito.mock(Connection.class);
-    JobRoleResponse job = new JobRoleResponse(1, "Teacher", "Associate", "www.example.com", List.of("Teaching"), "band1");
-
-    Mockito.when(databaseConnector.getConnection()).thenReturn(mockConnection);
-    Mockito.when(jobDao.getJobById(1, mockConnection)).thenReturn(job);
-
-    jobService.deleteJobRole(1);
-    verify(jobDao, times(1)).deleteJobRole(1, mockConnection);
   }
 }

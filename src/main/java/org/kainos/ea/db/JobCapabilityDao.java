@@ -32,14 +32,13 @@ public class JobCapabilityDao {
   }
 
   public JobCapabilityRequest getJobCapability(int jobCapabilityId, Connection c) throws SQLException {
-    try (PreparedStatement ps = c.prepareStatement("SELECT jobCapabilityName FROM JobCapabilities WHERE jobCapabilityId = ?");
-    ) {
+    try (PreparedStatement ps = c.prepareStatement("SELECT jobCapabilityName FROM JobCapabilities WHERE jobCapabilityId = ?;")) {
       ps.setInt(1, jobCapabilityId);
 
       try (ResultSet rs = ps.executeQuery()) {
         if (rs.next()) {
           JobCapabilityRequest jobCapabilityRequest = new JobCapabilityRequest(
-                  rs.getString("jobCapabilityName")
+              rs.getString("jobCapabilityName")
           );
           return jobCapabilityRequest;
         }

@@ -3,25 +3,30 @@ package org.kainos.ea.cli;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Job {
+import java.util.List;
+
+public class JobRoleResponse {
   private int jobId;
   private String jobName;
   private String jobCapabilityName;
   private String jobSpecUrl;
+  private List<String> responsibilities;
   private String bandName;
 
   @JsonCreator
-  public Job(
+  public JobRoleResponse(
           @JsonProperty("jobId") int jobId,
           @JsonProperty("jobName") String jobName,
           @JsonProperty("jobCapabilityName") String jobCapabilityName,
           @JsonProperty("jobSpecUrl") String jobSpecUrl,
+          @JsonProperty("responsibilities") List<String> responsibilities,
           @JsonProperty("bandName") String bandName) {
     this.jobId = jobId;
     this.jobName = jobName;
     this.jobCapabilityName = jobCapabilityName;
     this.jobSpecUrl = jobSpecUrl;
     this.bandName = bandName;
+    this.responsibilities = responsibilities;
   }
 
   public int getJobId() {
@@ -62,5 +67,13 @@ public class Job {
 
   public void setBandName(String bandName) {
     this.bandName = bandName;
+  }
+
+  public List<String> getResponsibilities() {
+    return responsibilities;
+  }
+
+  public void setResponsibilities(List<String> responsibilities) {
+    this.responsibilities = responsibilities;
   }
 }

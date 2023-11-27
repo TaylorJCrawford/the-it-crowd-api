@@ -66,8 +66,7 @@ public class DropwizardTheITCrowdServiceApplication extends Application<Dropwiza
   }
 
   @Override
-  public void run(final DropwizardTheITCrowdServiceConfiguration configuration,
-                  final Environment environment) {
+  public void run(final DropwizardTheITCrowdServiceConfiguration configuration, final Environment environment) {
     environment.jersey().register(new AuthController(authService, authDAO, authValidator));
     environment.jersey().register(new JobController(jobService));
     environment.jersey().register(new JobCapabilityController(jobCapabilityService));

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kainos.ea.DropwizardTheITCrowdServiceApplication;
 import org.kainos.ea.DropwizardTheITCrowdServiceConfiguration;
+import org.kainos.ea.cli.JobRoleResponse;
 import org.kainos.ea.api.JobRequest;
-import org.kainos.ea.cli.Job;
 import org.kainos.ea.db.DatabaseConnector;
 import org.kainos.ea.db.JobDao;
 
@@ -36,24 +36,22 @@ public class JobIntegrationTest {
     // Construct the target URL with the host URL
     String targetUrl = HOST + "/api/jobs";
 
-    List<Job> response = APP.client().target(targetUrl)
+    List<JobRoleResponse> response = APP.client().target(targetUrl)
             .request()
             .get(List.class);
 
     Assertions.assertFalse(response.isEmpty());
-    Assertions.assertTrue(response.size() > 0);
-
   }
 
   @Test
   void deleteJobRole_shouldDeleteWhenCalled() throws SQLException {
     JobRequest jobRequest = new JobRequest(
-            100,
-            "Teacher",
-            1,
-            1,
-            "Teacher",
-            "www.example.com"
+        100,
+        "Teacher",
+        1,
+        1,
+        "Teacher",
+        "www.example.com"
     );
 
     JobDao dao = new JobDao();
@@ -65,8 +63,8 @@ public class JobIntegrationTest {
     System.out.println(returnedId);
 
     Response response = APP.client().target(targetUrl)
-            .request()
-            .delete();
+        .request()
+        .delete();
 
     assertEquals(204, response.getStatus());
   }
@@ -77,8 +75,8 @@ public class JobIntegrationTest {
     String targetUrl = HOST + "/api/jobs/0";
 
     Response response = APP.client().target(targetUrl)
-            .request()
-            .delete();
+        .request()
+        .delete();
 
     assertEquals(404, response.getStatus());
   }
@@ -86,12 +84,11 @@ public class JobIntegrationTest {
   @Test
   void getJobRoleById_shouldReturnJobRequest() {
     int id = 1;
-
     String targetUrl = HOST + "/api/jobs/" + id;
 
-    Job response = APP.client().target(targetUrl)
+    JobRoleResponse response = APP.client().target(targetUrl)
             .request()
-            .get(Job.class);
+            .get(JobRoleResponse.class);
 
     // Check id field on response is = 1.
     Assertions.assertEquals(1, response.getJobId());

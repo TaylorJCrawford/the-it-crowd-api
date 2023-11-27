@@ -1,4 +1,5 @@
 package org.kainos.ea.resources;
+
 import io.swagger.annotations.Api;
 import org.eclipse.jetty.http.HttpStatus;
 import org.kainos.ea.api.JobService;

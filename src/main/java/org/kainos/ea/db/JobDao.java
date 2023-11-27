@@ -1,7 +1,8 @@
 package org.kainos.ea.db;
 
 import org.kainos.ea.api.JobRequest;
-import org.kainos.ea.cli.Job;
+import org.kainos.ea.cli.JobRoleResponse;
+import org.kainos.ea.cli.JobResponse;
 import org.kainos.ea.client.FailedToDeleteException;
 
 import java.sql.Connection;
@@ -36,7 +37,7 @@ public class JobDao {
     return 0;
   }
 
-  public List<Job> getAllJobs(Connection c) throws SQLException {
+  public List<JobResponse> getAllJobs(Connection c) throws SQLException {
 
     try (Statement st = c.createStatement()) {
 
@@ -46,15 +47,15 @@ public class JobDao {
 
       ResultSet rs = st.executeQuery(queryString);
 
-      List<Job> jobs = new ArrayList<>();
+      List<JobResponse> jobs = new ArrayList<>();
 
       while (rs.next()) {
-        Job job = new Job(
+        JobResponse job = new JobResponse(
                 rs.getInt("jobId"),
                 rs.getString("jobName"),
+                rs.getString("bandName"),
                 rs.getString("jobCapabilityName"),
-                rs.getString("jobSpecUrl"),
-                rs.getString("bandName")
+                rs.getString("jobSpecUrl")
         );
         jobs.add(job);
       }
@@ -62,23 +63,38 @@ public class JobDao {
     }
   }
 
-  public Job getJobById(int id, Connection c) throws SQLException {
-    String sql = "SELECT jobId, jobName, bandName, jobCapabilityName, jobSpecUrl " +
-            "FROM JobRoles LEFT JOIN Bands USING(bandId) " +
-            "LEFT JOIN JobCapabilities USING(jobCapabilityId)" +
+  public JobRoleResponse getJobById(int id, Connection c) throws SQLException {
+    String jobSql = "SELECT jobId, jobName, jobSpecUrl, bandName " +
+            "FROM JobRoles " +
+            "LEFT JOIN Bands USING(bandId) " +
             "WHERE jobId = ?;";
 
+    String responsibilitiesSql = "SELECT responsibilityDetails " +
+            "FROM Responsibilities " +
+            "WHERE jobId = ?";
 
-    try (PreparedStatement st = c.prepareStatement(sql)) {
-      st.setInt(1, id);
-      ResultSet rs = st.executeQuery();
-      if (rs.next()) {
-        return new Job(
-                rs.getInt("jobId"),
-                rs.getString("jobName"),
-                rs.getString("jobCapabilityName"),
-                rs.getString("jobSpecUrl"),
-                rs.getString("bandName")
+    try (PreparedStatement jobSt = c.prepareStatement(jobSql);
+         PreparedStatement responsibilitySt = c.prepareStatement(responsibilitiesSql)) {
+      jobSt.setInt(1, id);
+      responsibilitySt.setInt(1, id);
+
+      ResultSet jobRs = jobSt.executeQuery();
+      ResultSet responsibilityRs = responsibilitySt.executeQuery();
+
+      if (jobRs.next()) {
+
+        List<String> responsibilities = new ArrayList<>();
+        while (responsibilityRs.next()) {
+          responsibilities.add(responsibilityRs.getString("responsibilityDetails"));
+        }
+
+        return new JobRoleResponse(
+                jobRs.getInt("jobId"),
+                jobRs.getString("jobName"),
+                null,
+                jobRs.getString("jobSpecUrl"),
+                responsibilities,
+                jobRs.getString("bandName")
         );
       }
       return null;

@@ -22,7 +22,7 @@ public class AuthServiceIntegrationTest {
           new ResourceConfigurationSourceProvider()
   );
 
-  private static final String host = System.getenv("BASE_URL");
+  private static final String HOST = "http://localHOST:8080" ;
 
   @Test
   void userLogin_shouldReturnValidToken_whenLoginWithValidCredentials() {
@@ -36,7 +36,7 @@ public class AuthServiceIntegrationTest {
     );
 
 
-    Response response = APP.client().target(host + "/api/auth/login")
+    Response response = APP.client().target(HOST + "/api/auth/login")
             .request()
             .post(Entity.entity(loginRequest, MediaType.APPLICATION_JSON_TYPE));
 
@@ -56,7 +56,7 @@ public class AuthServiceIntegrationTest {
             testUserPassword
     );
 
-    Response response = APP.client().target(host + "/api/auth/login")
+    Response response = APP.client().target(HOST + "/api/auth/login")
             .request()
             .post(Entity.entity(loginRequest, MediaType.APPLICATION_JSON_TYPE));
 
